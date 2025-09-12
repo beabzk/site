@@ -1,0 +1,241 @@
+---
+title: "YAMDS"
+description: "Yet Another Markdown Documentation System - A modern documentation generator."
+longDescription: "A modern, fast documentation generator built with TypeScript. Features live preview, multiple themes, and excellent developer experience."
+tags: ["TypeScript", "Documentation", "CLI", "Markdown"]
+github: "https://github.com/beabzk/yamds"
+demo: "https://yamds-demo.vercel.app"
+docs: "https://yamds.dev/docs"
+date: "2024-08-28"
+featured: true
+status: "Active"
+difficulty: "Advanced"
+category: "Tool"
+size: "8.9K"
+---
+
+# YAMDS - Yet Another Markdown Documentation System
+
+A modern documentation generator with live preview and theme support, built for developers who want beautiful docs without the complexity.
+
+<Callout type="info" title="Why YAMDS?">
+  While there are many documentation generators available, YAMDS focuses on
+  simplicity and developer experience. It's designed to get out of your way and
+  let you focus on writing great documentation.
+</Callout>
+
+## Features
+
+<TechStack
+  technologies={[
+    "Live Preview",
+    "Multiple Themes",
+    "TypeScript",
+    "Fast Builds",
+    "Plugin System",
+    "SEO Optimized",
+  ]}
+/>
+
+- **Live Preview**: See changes instantly as you write
+- **Multiple Themes**: Choose from several built-in themes or create your own
+- **Fast**: Built with performance in mind using modern tooling
+- **TypeScript**: Full TypeScript support for configuration and plugins
+- **Extensible**: Plugin system for custom functionality
+
+## Installation
+
+```bash
+npm install -g yamds
+```
+
+## Quick Start
+
+```bash
+# Initialize a new documentation site
+yamds init my-docs
+cd my-docs
+
+# Start the development server
+yamds dev
+
+# Build for production
+yamds build
+```
+
+<Callout type="success" title="Quick Setup">
+  YAMDS can have you up and running with beautiful documentation in under 2
+  minutes!
+</Callout>
+
+## Configuration
+
+YAMDS uses a simple configuration file:
+
+```typescript
+// yamds.config.ts
+export default {
+  title: "My Documentation",
+  description: "Comprehensive documentation for my project",
+  theme: "default",
+  sidebar: [
+    {
+      text: "Getting Started",
+      items: [
+        { text: "Introduction", link: "/intro" },
+        { text: "Installation", link: "/installation" },
+      ],
+    },
+  ],
+  plugins: ["search", "analytics"],
+};
+```
+
+## Themes
+
+YAMDS comes with several built-in themes:
+
+### Default Theme
+
+Clean and modern design with excellent readability.
+
+### Minimal Theme
+
+Stripped down for maximum focus on content.
+
+### Dark Theme
+
+Dark mode optimized for late-night documentation sessions.
+
+### Technical Theme
+
+Code-focused design perfect for API documentation.
+
+```bash
+# Switch themes easily
+yamds build --theme minimal
+```
+
+## Performance
+
+YAMDS is built for speed:
+
+<Callout type="tip" title="Performance Features">
+  - Fast hot reload during development - Optimized production builds - Minimal
+  JavaScript footprint - Excellent Core Web Vitals scores
+</Callout>
+
+### Build Performance
+
+```bash
+# Example build times
+yamds build
+✓ Built 150 pages in 2.3s
+✓ Generated search index in 0.8s
+✓ Optimized assets in 1.1s
+```
+
+## Plugin System
+
+Extend YAMDS with powerful plugins:
+
+```typescript
+// yamds.config.ts
+export default {
+  plugins: [
+    "search", // Full-text search
+    "analytics", // Google Analytics
+    "sitemap", // XML sitemap generation
+    "social-cards", // Auto-generate social media cards
+    "code-copy", // Copy code button
+    "mermaid", // Diagram support
+  ],
+};
+```
+
+### Custom Plugins
+
+```typescript
+// plugins/custom-plugin.ts
+export default function customPlugin(options: any) {
+  return {
+    name: "custom-plugin",
+    setup(build: any) {
+      // Plugin logic here
+    },
+  };
+}
+```
+
+## Advanced Features
+
+### Search Integration
+
+```typescript
+// Built-in search with fuzzy matching
+export default {
+  search: {
+    provider: "local",
+    options: {
+      fuzzy: true,
+      maxResults: 10,
+    },
+  },
+};
+```
+
+### Custom Components
+
+```markdown
+<!-- Use custom components in your markdown -->
+<CodeBlock language="typescript" filename="example.ts">
+const example = "Hello World";
+</CodeBlock>
+
+<Callout type="warning">
+This is a custom callout component!
+</Callout>
+```
+
+## Deployment
+
+Deploy to any static hosting provider:
+
+```bash
+# Build for production
+yamds build
+
+# Deploy to Vercel
+vercel deploy dist
+
+# Deploy to Netlify
+netlify deploy --prod --dir dist
+
+# Deploy to GitHub Pages
+yamds deploy --provider github-pages
+```
+
+## Roadmap
+
+- [ ] Plugin marketplace
+- [ ] Advanced search functionality
+- [ ] Multi-language support
+- [ ] Integration with popular CMS systems
+- [ ] Real-time collaboration
+- [ ] AI-powered content suggestions
+
+<ProjectLinks
+  links={[
+    { type: "github", url: "https://github.com/beabzk/yamds" },
+    { type: "demo", url: "https://yamds-demo.vercel.app" },
+    { type: "docs", url: "https://yamds.dev/docs" },
+  ]}
+/>
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](https://github.com/beabzk/yamds/blob/main/CONTRIBUTING.md) for details.
+
+## License
+
+MIT License - see [LICENSE](https://github.com/beabzk/yamds/blob/main/LICENSE) for details.

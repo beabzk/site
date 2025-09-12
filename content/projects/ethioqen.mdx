@@ -1,0 +1,167 @@
+---
+title: "ethioqen"
+description: "A Python package for handling Ethiopian date and time conversions with full calendar support."
+longDescription: "A comprehensive Python library that provides seamless conversion between Ethiopian and Gregorian calendars, with full support for Ethiopian date formatting, parsing, and manipulation. Built with performance and accuracy in mind."
+tags: ["Python", "CLI", "Utility", "Calendar"]
+github: "https://github.com/beabzk/ethioqen"
+date: "2024-09-10"
+featured: true
+status: "Active"
+difficulty: "Intermediate"
+category: "Library"
+size: "4.2K"
+---
+
+# ethioqen
+
+A Python package for handling Ethiopian date and time conversions with full calendar support and localization features.
+
+<Callout type="info" title="About Ethiopian Calendar">
+  The Ethiopian calendar is approximately 7-8 years behind the Gregorian
+  calendar and has 13 months. This package provides accurate conversion between
+  the two calendar systems.
+</Callout>
+
+## Overview
+
+The Ethiopian calendar system is unique and requires specialized handling for accurate date conversions. This package provides:
+
+<TechStack
+  technologies={[
+    "Date Conversion",
+    "Calendar Systems",
+    "Localization",
+    "CLI Interface",
+  ]}
+/>
+
+## Installation
+
+```bash
+pip install ethioqen
+```
+
+## Quick Start
+
+```python
+from ethioqen import EthiopianDate, GregorianDate
+
+# Convert Gregorian to Ethiopian
+gregorian = GregorianDate(2024, 9, 10)
+ethiopian = gregorian.to_ethiopian()
+print(f"Ethiopian date: {ethiopian}")  # Ethiopian date: 2017-01-01
+
+# Convert Ethiopian to Gregorian
+ethiopian = EthiopianDate(2017, 1, 1)
+gregorian = ethiopian.to_gregorian()
+print(f"Gregorian date: {gregorian}")  # Gregorian date: 2024-09-10
+```
+
+## Command Line Usage
+
+The package includes a comprehensive CLI for quick conversions:
+
+```bash
+# Convert current date to Ethiopian
+ethioqen today
+
+# Convert specific Gregorian date
+ethioqen convert --from gregorian --date 2024-09-10
+
+# Convert Ethiopian date to Gregorian
+ethioqen convert --from ethiopian --date 2017-01-01
+
+# Get help
+ethioqen --help
+```
+
+<Callout type="tip" title="Pro Tip">
+  Use the `--format` flag to customize the output format for your specific
+  needs.
+</Callout>
+
+## Features
+
+### Accurate Calendar Conversion
+
+The package implements the precise mathematical algorithms for converting between the Ethiopian and Gregorian calendar systems, accounting for leap years and calendar differences.
+
+### CLI Interface
+
+A comprehensive command-line interface makes it easy to perform quick conversions without writing code.
+
+### Localization Support
+
+Full support for Ethiopian month names and date formatting in both Amharic and English.
+
+```python
+# Example with localization
+from ethioqen import EthiopianDate
+
+date = EthiopianDate(2017, 1, 1)
+print(date.format('amharic'))  # መስከረም ፩ ቀን ፪ሺ፲፯ ዓ.ም
+print(date.format('english'))  # Meskerem 1, 2017 E.C.
+```
+
+## Technical Implementation
+
+The conversion algorithms are based on the Julian Day Number system, ensuring accuracy across all date ranges. The package handles edge cases like leap years and provides comprehensive error handling.
+
+<Callout type="warning" title="Important Note">
+  Always validate input dates to ensure they fall within supported ranges for
+  accurate conversion.
+</Callout>
+
+## API Reference
+
+### EthiopianDate Class
+
+```python
+class EthiopianDate:
+    def __init__(self, year: int, month: int, day: int)
+    def to_gregorian(self) -> GregorianDate
+    def format(self, locale: str = 'english') -> str
+    def is_leap_year(self) -> bool
+```
+
+### GregorianDate Class
+
+```python
+class GregorianDate:
+    def __init__(self, year: int, month: int, day: int)
+    def to_ethiopian(self) -> EthiopianDate
+    def format(self, format_string: str = '%Y-%m-%d') -> str
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/beabzk/ethioqen.git
+cd ethioqen
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+```
+
+<ProjectLinks
+  links={[
+    { type: "github", url: "https://github.com/beabzk/ethioqen" },
+    { type: "docs", url: "https://ethioqen.readthedocs.io" },
+  ]}
+/>
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
