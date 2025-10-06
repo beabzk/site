@@ -127,8 +127,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const themeColors = themes[theme].colors;
 
     const root = document.documentElement;
-    // Add dark class for consistent styling
-    root.className = "dark";
+    // Add dark class for consistent styling (preserve existing classes)
+    root.classList.add("dark");
     root.style.setProperty("--background-primary", themeColors.background);
     root.style.setProperty(
       "--background-secondary",
