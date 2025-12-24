@@ -1,14 +1,12 @@
 import MainLayout from "../../components/layout/MainLayout";
-import Terminal from "../../components/ui/Terminal";
-import CommandPrompt from "../../components/ui/CommandPrompt";
-import TypingAnimation from "../../components/ui/TypingAnimation";
+import Container from "../../components/ui/Container";
 import { H2, H3, P } from "../../components/ui/Typography";
-import { Github, Linkedin, Mail, MapPin, Calendar } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin } from "lucide-react";
 
 const skills = {
   Languages: ["Python", "TypeScript", "JavaScript", "Go", "Rust", "SQL"],
-  Frontend: ["React", "Next.js", "Vue.js", "Tailwind CSS", "HTML5", "CSS3"],
-  Backend: ["Node.js", "FastAPI", "Django", "Express", "PostgreSQL", "Redis"],
+  Frontend: ["React", "Next.js", "Tailwind CSS", "HTML5", "CSS3"],
+  Backend: ["Node.js", "Django", "Express", "PostgreSQL"],
   Tools: ["Git", "Docker", "AWS", "Vercel", "Linux", "VS Code"],
   Concepts: [
     "REST APIs",
@@ -20,213 +18,132 @@ const skills = {
   ],
 };
 
-const experience = [
-  {
-    period: "2023 - Present",
-    role: "Senior Full-Stack Developer",
-    company: "Tech Innovations Inc.",
-    description:
-      "Leading development of scalable web applications using modern technologies. Mentoring junior developers and architecting cloud-native solutions.",
-  },
-  {
-    period: "2021 - 2023",
-    role: "Full-Stack Developer",
-    company: "Digital Solutions Co.",
-    description:
-      "Built and maintained multiple client applications using React, Node.js, and Python. Improved application performance by 40% through optimization.",
-  },
-  {
-    period: "2020 - 2021",
-    role: "Frontend Developer",
-    company: "StartupXYZ",
-    description:
-      "Developed responsive web applications and collaborated with design teams to create intuitive user experiences. Implemented modern frontend architectures.",
-  },
-];
-
 export default function AboutPage() {
   return (
     <MainLayout>
-      <div className="space-y-8">
+      <div className="space-y-12 pb-10">
         {/* Header */}
-        <div className="space-y-4">
-          <Terminal title="about" showControls={false} className="max-w-2xl">
-            <CommandPrompt showCursor={false}>
-              <TypingAnimation text="cat ~/about.txt" speed={80} />
-            </CommandPrompt>
-          </Terminal>
-
-          <div>
-            <H2>About Me</H2>
-            <P className="mt-2">
-              Full-stack developer passionate about building tools that solve
-              real problems. I enjoy working with modern technologies and
-              contributing to open source projects.
-            </P>
-          </div>
-        </div>
+        <section>
+          <H2>About Me</H2>
+          <P className="mt-4 max-w-2xl text-lg">
+            I&apos;m a developer with a focus on creating efficient, scalable solutions.
+          </P>
+        </section>
 
         {/* Bio Section */}
-        <div className="grid gap-8 lg:grid-cols-3">
-          <div className="space-y-6 lg:col-span-2">
+        <div className="grid gap-12 lg:grid-cols-3">
+          <div className="space-y-12 lg:col-span-2">
             {/* Introduction */}
-            <div>
+            <section>
               <H3>Introduction</H3>
               <div className="mt-4 space-y-4 leading-relaxed text-gray-300">
                 <P>
-                  I&apos;m a full-stack developer with a passion for creating
-                  efficient, scalable solutions. My journey in software
-                  development started with curiosity about how things work under
-                  the hood, and has evolved into a career focused on building
-                  tools that make developers&apos; lives easier.
-                </P>
-                <P>
-                  I specialize in Python and TypeScript ecosystems, with
-                  experience ranging from CLI utilities to complex web
-                  applications. I believe in writing clean, maintainable code
-                  and am always exploring new technologies to stay current with
-                  industry trends.
-                </P>
-                <P>
-                  When I&apos;m not coding, you&apos;ll find me contributing to
-                  open source projects, writing technical documentation, or
-                  experimenting with new frameworks and tools. I&apos;m
-                  particularly interested in developer experience, automation,
-                  and building systems that scale.
+                  My journey in software development started with curiosity about
+                  how things work under the hood.
                 </P>
               </div>
-            </div>
+            </section>
 
             {/* Experience */}
-            <div>
+            {/* <section>
               <H3>Experience</H3>
-              <div className="mt-4 space-y-6">
+              <div className="mt-6 space-y-8">
                 {experience.map((exp, index) => (
-                  <div key={index} className="border-l-2 border-gray-800 pl-4">
-                    <div className="mb-2 flex items-center gap-2">
-                      <Calendar size={16} className="text-green-400" />
-                      <span className="font-mono text-sm text-green-400">
-                        {exp.period}
-                      </span>
+                  <div key={index} className="relative border-l-2 border-gray-800 pl-6 ml-1">
+                    <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full border-2 border-gray-800 bg-black" />
+                    <div className="mb-1 flex items-center gap-2 text-[var(--accent-primary)]">
+                      <Calendar size={14} />
+                      <span className="text-sm font-medium">{exp.period}</span>
                     </div>
-                    <h4 className="font-mono text-lg text-white">{exp.role}</h4>
-                    <p className="mb-2 font-mono text-sm text-gray-400">
-                      {exp.company}
-                    </p>
-                    <p className="text-sm leading-relaxed text-gray-300">
+                    <h4 className="text-xl font-semibold text-white">{exp.role}</h4>
+                    <p className="text-sm text-gray-400">{exp.company}</p>
+                    <p className="mt-3 text-gray-300 leading-relaxed">
                       {exp.description}
                     </p>
                   </div>
                 ))}
               </div>
-            </div>
+            </section> */}
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Contact Info */}
-            <Terminal title="contact" showControls={false}>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <MapPin size={16} className="text-green-400" />
+            <Container variant="bordered">
+              <h4 className="mb-4 font-semibold text-white">Contact</h4>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 text-gray-400">
+                  <MapPin size={18} style={{ color: "var(--accent-primary)" }} />
                   <span className="text-sm">Remote / Global</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Mail size={16} className="text-green-400" />
-                  <a
-                    href="mailto:hello@beabzk.dev"
-                    className="text-sm transition-colors hover:text-green-400"
-                  >
-                    hello@beabzk.dev
-                  </a>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Github size={16} className="text-green-400" />
-                  <a
-                    href="https://github.com/beabzk"
-                    className="text-sm transition-colors hover:text-green-400"
-                  >
-                    github.com/beabzk
-                  </a>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Linkedin size={16} className="text-green-400" />
-                  <a
-                    href="https://linkedin.com/in/beabzk"
-                    className="text-sm transition-colors hover:text-green-400"
-                  >
-                    linkedin.com/in/beabzk
-                  </a>
-                </div>
+                <a
+                  href="mailto:beabzk@proton.me"
+                  className="flex items-center gap-3 text-gray-300 transition-colors hover:text-[var(--accent-primary)]"
+                >
+                  <Mail size={18} style={{ color: "var(--accent-primary)" }} />
+                  <span className="text-sm">beabzk@proton.me</span>
+                </a>
+                <a
+                  href="https://github.com/beabzk"
+                  className="flex items-center gap-3 text-gray-300 transition-colors hover:text-[var(--accent-primary)]"
+                >
+                  <Github size={18} style={{ color: "var(--accent-primary)" }} />
+                  <span className="text-sm">github.com/beabzk</span>
+                </a>
+                <a
+                  href="https://linkedin.com/in/beabzk"
+                  className="flex items-center gap-3 text-gray-300 transition-colors hover:text-[var(--accent-primary)]"
+                >
+                  <Linkedin size={18} style={{ color: "var(--accent-primary)" }} />
+                  <span className="text-sm">linkedin.com/in/beabzk</span>
+                </a>
               </div>
-            </Terminal>
+            </Container>
 
             {/* Current Status */}
-            <Terminal title="status" showControls={false}>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Status:</span>
-                  <span className="text-green-400">Available</span>
+            <Container variant="bordered">
+              <h4 className="mb-4 font-semibold text-white">Status</h4>
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Availability</span>
+                  <span style={{ color: "var(--accent-primary)" }}>Open</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Focus:</span>
-                  <span className="text-green-400">Full-stack</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Timezone:</span>
-                  <span className="text-green-400">UTC+0</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Coffee:</span>
-                  <span className="text-green-400">Always</span>
-                </div>
+                {/* <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Focus</span>
+                  <span className="text-white">Full-stack</span>
+                </div> */}
               </div>
-            </Terminal>
+            </Container>
           </div>
         </div>
 
         {/* Skills Matrix */}
-        <div>
+        <section>
           <H3>Technical Skills</H3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Object.entries(skills).map(([category, skillList]) => (
-              <Terminal
+              <Container
                 key={category}
-                title={category.toLowerCase()}
-                showControls={false}
+                variant="subtle"
+                className="border border-gray-900"
               >
-                <div className="space-y-1">
-                  {skillList.map((skill, index) => (
-                    <div
+                <div className="mb-4 font-semibold text-white uppercase tracking-wider text-xs text-gray-500">
+                  {category}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {skillList.map((skill) => (
+                    <span
                       key={skill}
-                      className="flex items-center gap-2 text-sm"
+                      className="rounded-full bg-gray-950 border border-gray-800 px-3 py-1 text-xs text-gray-300"
                     >
-                      <span className="w-6 font-mono text-gray-500">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-gray-300">{skill}</span>
-                    </div>
+                      {skill}
+                    </span>
                   ))}
                 </div>
-              </Terminal>
+              </Container>
             ))}
           </div>
-        </div>
-
-        {/* Fun Facts */}
-        <Terminal title="fun-facts" showControls={false} className="max-w-2xl">
-          <div className="space-y-2 text-sm">
-            <div className="text-gray-400">$ cat ~/fun-facts.txt</div>
-            <div className="space-y-1 text-gray-300">
-              <div>• I prefer dark themes (obviously)</div>
-              <div>• My favorite programming font is JetBrains Mono</div>
-              <div>• I use Vim keybindings in VS Code</div>
-              <div>• I have strong opinions about code formatting</div>
-              <div>• I believe in the power of good documentation</div>
-              <div>• I&apos;m always learning something new</div>
-            </div>
-          </div>
-        </Terminal>
+        </section>
       </div>
     </MainLayout>
   );

@@ -27,7 +27,6 @@ export default function Card({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}
-      whileHover={hover ? { y: -2 } : {}}
       whileTap={onClick ? { scale: 0.98 } : {}}
     >
       {children}
@@ -53,29 +52,20 @@ export function ProjectCard({
   tags,
   href,
   external = false,
-  size,
-  date,
   className = "",
 }: ProjectCardProps) {
   const cardContent = (
     <Card className={`group ${className}`} hover glow>
       <div className="space-y-3">
-        {/* File-style header */}
-        <div className="mb-1 flex items-center justify-between">
-          <div className="flex items-center gap-1 font-mono text-xs whitespace-nowrap text-gray-500">
-            <span>-rw-r--r--</span>
-            <span>1</span>
-            <span className="text-green-400">beabzk</span>
-            <span>dev</span>
-            {size && <span>{size}</span>}
-            {date && <span>{date}</span>}
-          </div>
-        </div>
-
         {/* Project info */}
         <div>
-          <h3 className="font-mono text-lg font-semibold text-white transition-colors group-hover:text-green-400">
-            {title}
+          <h3
+            className="text-lg font-semibold text-white transition-colors"
+            style={{ color: "var(--text-primary)" }}
+          >
+            <span className="group-hover:text-[var(--accent-primary)] transition-colors">
+              {title}
+            </span>
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-gray-300">
             {description}
@@ -88,7 +78,7 @@ export function ProjectCard({
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded border border-gray-700 bg-gray-800 px-2 py-1 font-mono text-xs text-gray-400"
+                className="rounded-full bg-gray-800 px-3 py-1 text-xs text-gray-400 border border-gray-700"
               >
                 {tag}
               </span>
@@ -98,7 +88,7 @@ export function ProjectCard({
 
         {/* Link indicator */}
         {href && (
-          <div className="flex items-center gap-2 text-sm text-gray-500 transition-colors group-hover:text-green-400">
+          <div className="flex items-center gap-2 text-sm text-gray-500 transition-colors group-hover:text-[var(--accent-primary)]">
             <span>→</span>
             <span>{external ? "External link" : "View project"}</span>
           </div>

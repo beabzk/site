@@ -26,7 +26,7 @@ export default function EnhancedCodeBlock({
         typeof children === "string"
           ? children
           : (children as React.ReactElement<{ children?: string }>)?.props
-              ?.children || "";
+            ?.children || "";
 
       await navigator.clipboard.writeText(textContent);
       setCopied(true);
@@ -50,7 +50,7 @@ export default function EnhancedCodeBlock({
             title="Copy code"
           >
             {copied ? (
-              <Check size={16} className="text-green-400" />
+              <Check size={16} style={{ color: "var(--accent-primary)" }} />
             ) : (
               <Copy size={16} className="text-gray-400" />
             )}
@@ -74,7 +74,7 @@ export default function EnhancedCodeBlock({
           title="Copy code"
         >
           {copied ? (
-            <Check size={16} className="text-green-400" />
+            <Check size={16} style={{ color: "var(--accent-primary)" }} />
           ) : (
             <Copy size={16} className="text-gray-400" />
           )}
@@ -92,7 +92,8 @@ export function InlineCode({
 }: React.HTMLAttributes<HTMLElement>) {
   return (
     <code
-      className={`rounded bg-gray-800 px-1.5 py-0.5 font-mono text-sm text-green-400 ${className}`}
+      className={`rounded bg-gray-800 px-1.5 py-0.5 font-mono text-sm ${className}`}
+      style={{ color: "var(--accent-primary)" }}
       {...props}
     >
       {children}

@@ -1,44 +1,43 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+"use client";
 
-const socialLinks = [
-  { name: "GitHub", href: "https://github.com/beabzk", icon: Github },
-  { name: "LinkedIn", href: "https://linkedin.com/in/beabzk", icon: Linkedin },
-  { name: "Email", href: "mailto:hello@beabzk.dev", icon: Mail },
-];
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-gray-800 bg-black/30">
-      <div className="mx-auto max-w-4xl px-6 py-6">
+    <footer className="border-t border-gray-800 py-8">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          {/* Terminal-style status line */}
-          <div className="font-mono text-sm text-gray-500">
-            <span className="text-green-400">beabzk@dev</span>
-            <span className="mx-2">~</span>
-            <span>© {currentYear}</span>
-            <span className="mx-2">•</span>
-            <span>Built with Next.js & TypeScript</span>
-          </div>
-
-          {/* Social links */}
-          <div className="flex items-center gap-4">
-            {socialLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-500 transition-colors hover:text-green-400"
-                  aria-label={link.name}
-                >
-                  <Icon size={18} />
-                </a>
-              );
-            })}
+          <p className="text-sm text-gray-400">
+            © {currentYear} beabzk. All rights reserved.
+          </p>
+          <div className="flex gap-6">
+            <a
+              href="https://github.com/beabzk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 transition-colors hover:text-[var(--accent-primary)]"
+              aria-label="GitHub"
+            >
+              <Github size={18} />
+            </a>
+            <a
+              href="https://linkedin.com/in/beabzk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 transition-colors hover:text-[var(--accent-primary)]"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={18} />
+            </a>
+            <a
+              href="mailto:beabzk@proton.me"
+              className="text-gray-500 transition-colors hover:text-[var(--accent-primary)]"
+              aria-label="Email"
+            >
+              <Mail size={18} />
+            </a>
           </div>
         </div>
       </div>

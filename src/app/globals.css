@@ -103,3 +103,61 @@ body {
   background: var(--background-primary);
   color: var(--text-secondary);
 }
+
+/* Custom scrollbar for code blocks */
+pre::-webkit-scrollbar {
+  height: 8px;
+  background: var(--background-secondary);
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: var(--text-quaternary);
+  border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Prose code blocks - ensure they use proper colors */
+.prose pre {
+  background-color: var(--background-secondary) !important;
+  border: 1px solid var(--background-tertiary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.prose pre code {
+  color: var(--text-secondary) !important;
+  background-color: transparent !important;
+  display: inline-block;
+  min-width: 100%;
+}
+
+/* Syntax highlighting overrides for a cohesive theme */
+.prose pre code .keyword,
+.prose pre code .token.keyword {
+  color: #ff79c6;
+}
+
+.prose pre code .string,
+.prose pre code .token.string {
+  color: #f1fa8c;
+}
+
+.prose pre code .comment,
+.prose pre code .token.comment {
+  color: #6272a4;
+}
+
+.prose pre code .function,
+.prose pre code .token.function {
+  color: #50fa7b;
+}
+
+.prose pre code .number,
+.prose pre code .token.number {
+  color: #bd93f9;
+}

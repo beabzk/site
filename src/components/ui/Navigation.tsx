@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Terminal, User, FolderOpen, Settings, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const navigationItems = [
-  { name: "home", href: "/", icon: Terminal },
-  { name: "projects", href: "/projects", icon: FolderOpen },
-  { name: "about", href: "/about", icon: User },
-  { name: "uses", href: "/uses", icon: Settings },
+  { name: "home", href: "/" },
+  { name: "projects", href: "/projects" },
+  { name: "articles", href: "/articles" },
+  { name: "about", href: "/about" },
+  { name: "uses", href: "/uses" },
 ];
 
 export default function Navigation() {
@@ -21,39 +22,31 @@ export default function Navigation() {
     <header className="sticky top-0 z-50 border-b border-gray-800 bg-black/50 backdrop-blur-sm">
       <div className="mx-auto max-w-4xl px-4 py-4 sm:px-6">
         <nav className="flex items-center justify-between">
-          {/* Terminal-style logo */}
+          {/* Minimal text-based logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 font-mono text-green-400 transition-colors hover:text-green-300"
+            className="font-mono text-lg font-bold transition-colors hover:opacity-80"
+            style={{ color: "var(--accent-primary)" }}
           >
-            <Terminal size={20} />
-            <span className="hidden text-lg font-semibold sm:inline">
-              beabzk@dev
-            </span>
-            <span className="text-lg font-semibold sm:hidden">beabzk</span>
+            beabzk
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-1 md:flex">
             {navigationItems.map((item) => {
               const isActive = pathname === item.href;
-              const Icon = item.icon;
 
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center gap-2 rounded-md px-3 py-2 font-mono text-sm transition-all duration-200 hover:bg-gray-900 ${
-                    isActive
-                      ? "bg-gray-900 text-green-400"
-                      : "text-gray-400 hover:text-gray-200"
-                  } `}
+                  className={`rounded-md px-3 py-2 text-sm transition-all duration-200 hover:bg-gray-900 ${isActive
+                    ? "bg-gray-900 font-medium"
+                    : "text-gray-400 hover:text-gray-200"
+                    } `}
+                  style={isActive ? { color: "var(--accent-primary)" } : {}}
                 >
-                  <Icon size={16} />
                   <span>{item.name}</span>
-                  {isActive && (
-                    <span className="animate-pulse text-green-400">_</span>
-                  )}
                 </Link>
               );
             })}
@@ -78,24 +71,19 @@ export default function Navigation() {
             <div className="mt-4 flex flex-col space-y-2">
               {navigationItems.map((item) => {
                 const isActive = pathname === item.href;
-                const Icon = item.icon;
 
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center gap-2 rounded-md px-3 py-2 font-mono text-sm transition-all duration-200 hover:bg-gray-900 ${
-                      isActive
-                        ? "bg-gray-900 text-green-400"
-                        : "text-gray-400 hover:text-gray-200"
-                    } `}
+                    className={`rounded-md px-3 py-2 text-sm transition-all duration-200 hover:bg-gray-900 ${isActive
+                      ? "bg-gray-900 font-medium"
+                      : "text-gray-400 hover:text-gray-200"
+                      } `}
+                    style={isActive ? { color: "var(--accent-primary)" } : {}}
                   >
-                    <Icon size={16} />
                     <span>{item.name}</span>
-                    {isActive && (
-                      <span className="animate-pulse text-green-400">_</span>
-                    )}
                   </Link>
                 );
               })}

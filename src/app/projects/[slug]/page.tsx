@@ -1,21 +1,20 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import MainLayout from "../../../components/layout/MainLayout";
-import Terminal from "../../../components/ui/Terminal";
-import CommandPrompt from "../../../components/ui/CommandPrompt";
-import { H1, P } from "../../../components/ui/Typography";
+import Container from "../../../components/ui/Container";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { components } from "../../../mdx-components";
+import rehypePrettyCode from "rehype-pretty-code";
 import {
   ArrowLeft,
   ExternalLink,
   Calendar,
-  Tag,
   Star,
   GitBranch,
 } from "lucide-react";
 import {
   getProjectBySlug,
   getProjectSlugs,
-  getStaticProject,
   getProjectLinks,
 } from "../../../lib/projects";
 
@@ -27,89 +26,102 @@ interface ProjectPageProps {
 
 export async function generateStaticParams() {
   const slugs = getProjectSlugs();
-
-  // If no MDX files exist, use static projects
-  if (slugs.length === 0) {
-    return ["ethioqen", "yamds", "audio-lyrics-merger"].map((slug) => ({
-      slug,
-    }));
-  }
-
   return slugs.map((slug) => ({ slug }));
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  // Await params in Next.js 15
   const { slug } = await params;
 
-  // Try to get project from MDX files first, then fallback to static data
-  let project = getProjectBySlug(slug);
-
-  if (!project) {
-    project = getStaticProject(slug);
-  }
+  const project = getProjectBySlug(slug);
 
   if (!project) {
     notFound();
   }
 
   const projectLinks = getProjectLinks(project.metadata);
+  const formattedDate = new Date(project.metadata.date).toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }
+  );
+
+  const mdxOptions = {
+    mdxOptions: {
+      rehypePlugins: [
+        [
+          rehypePrettyCode,
+          {
+            theme: "catppuccin-mocha",
+            keepBackground: false,
+          },
+        ],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ] as any,
+    },
+  };
 
   return (
     <MainLayout>
-      <div className="space-y-8">
+      <div className="pb-20">
         {/* Navigation */}
-        <div className="flex items-center gap-4">
-          <Link
-            href="/projects"
-            className="flex items-center gap-2 text-gray-400 transition-colors hover:text-gray-200"
-          >
-            <ArrowLeft size={16} />
-            <span className="font-mono text-sm">Back to Projects</span>
-          </Link>
-        </div>
-
-        {/* Terminal Header */}
-        <Terminal
-          title={`project-details`}
-          showControls={false}
-          className="max-w-2xl"
+        <Link
+          href="/projects"
+          className="group mb-12 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-white"
         >
-          <CommandPrompt showCursor={false}>
-            cat ~/projects/{slug}/README.md
-          </CommandPrompt>
-        </Terminal>
+          <ArrowLeft
+            size={16}
+            className="transition-transform group-hover:-translate-x-1"
+          />
+          <span>Back to Projects</span>
+        </Link>
 
-        {/* Project Info */}
-        <div className="grid gap-8 lg:grid-cols-4">
-          <div className="space-y-6 lg:col-span-3">
-            <div>
-              <div className="mb-4 flex items-center gap-3">
-                <H1>{project.metadata.title}</H1>
-                {project.metadata.featured && (
-                  <Star size={24} className="fill-current text-yellow-400" />
-                )}
-              </div>
-              <P className="text-lg">
-                {project.metadata.longDescription ||
-                  project.metadata.description}
-              </P>
+        {/* Project Header */}
+        <header className="mb-12 space-y-6">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-gray-500">
+            <div className="flex items-center gap-1.5">
+              <Calendar size={14} style={{ color: "var(--accent-primary)" }} />
+              <span>{formattedDate}</span>
             </div>
-
-            {/* Content */}
-            <div className="prose prose-invert max-w-none">
-              <div className="leading-relaxed whitespace-pre-wrap text-gray-300">
-                {project.content}
+            {project.metadata.category && (
+              <div className="rounded-full bg-gray-950 border border-gray-800 px-3 py-1 uppercase tracking-wider">
+                {project.metadata.category}
               </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between gap-4">
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+              {project.metadata.title}
+            </h1>
+            {project.metadata.featured && (
+              <Star size={32} className="text-yellow-500 fill-current" />
+            )}
+          </div>
+
+          <p className="max-w-3xl text-xl text-gray-400 leading-relaxed">
+            {project.metadata.description}
+          </p>
+        </header>
+
+        {/* Main Content Grid */}
+        <div className="grid gap-12 lg:grid-cols-4">
+          <div className="lg:col-span-3">
+            {/* Content Body */}
+            <div className="prose prose-invert prose-emerald max-w-none">
+              <MDXRemote source={project.content} components={components} options={mdxOptions} />
             </div>
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Project Links */}
+          <aside className="space-y-8">
+            {/* Action Links */}
             {projectLinks.length > 0 && (
-              <Terminal title="links" showControls={false}>
-                <div className="space-y-3">
+              <section className="space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500">Links</h3>
+                <div className="flex flex-col gap-3">
                   {projectLinks.map((link, index) => {
                     const icons = {
                       github: GitBranch,
@@ -118,12 +130,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                       npm: ExternalLink,
                     };
                     const labels = {
-                      github: "View Source",
+                      github: "Source Code",
                       demo: "Live Demo",
                       docs: "Documentation",
                       npm: "NPM Package",
                     };
-                    const Icon = icons[link.type];
+                    const Icon = icons[link.type] || ExternalLink;
 
                     return (
                       <a
@@ -131,70 +143,47 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm transition-colors hover:text-green-400"
+                        className="flex items-center justify-between rounded-xl border border-gray-800 bg-gray-950 p-4 transition-all hover:border-[var(--accent-primary)] group"
                       >
-                        <Icon size={16} />
-                        {labels[link.type]}
-                        <ExternalLink size={12} />
+                        <div className="flex items-center gap-3">
+                          <Icon size={18} className="text-gray-400 group-hover:text-[var(--accent-primary)]" />
+                          <span className="text-sm font-medium text-white">{labels[link.type]}</span>
+                        </div>
+                        <ExternalLink size={14} className="text-gray-600 group-hover:text-[var(--accent-primary)]" />
                       </a>
                     );
                   })}
                 </div>
-              </Terminal>
+              </section>
             )}
 
-            {/* Project Meta */}
-            <Terminal title="metadata" showControls={false}>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <Calendar size={14} className="text-green-400" />
-                  <span className="text-gray-400">Created:</span>
-                  <span>
-                    {new Date(project.metadata.date).toLocaleDateString()}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Tag size={14} className="text-green-400" />
-                  <span className="text-gray-400">Status:</span>
-                  <span className="text-green-400">
-                    {project.metadata.status}
-                  </span>
-                </div>
-                {project.metadata.difficulty && (
-                  <div className="flex items-center gap-2">
-                    <Tag size={14} className="text-green-400" />
-                    <span className="text-gray-400">Difficulty:</span>
-                    <span className="text-green-400">
-                      {project.metadata.difficulty}
-                    </span>
-                  </div>
-                )}
-                {project.metadata.category && (
-                  <div className="flex items-center gap-2">
-                    <Tag size={14} className="text-green-400" />
-                    <span className="text-gray-400">Category:</span>
-                    <span className="text-green-400">
-                      {project.metadata.category}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </Terminal>
-
             {/* Technologies */}
-            <Terminal title="technologies" showControls={false}>
-              <div className="space-y-2">
-                {project.metadata.tags.map((tag, index) => (
-                  <div key={tag} className="flex items-center gap-2 text-sm">
-                    <span className="w-6 font-mono text-gray-500">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-gray-300">{tag}</span>
-                  </div>
+            <section className="space-y-4">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500">Tech Stack</h3>
+              <div className="flex flex-wrap gap-2">
+                {project.metadata.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-gray-900 border border-gray-800 px-3 py-1 text-xs text-gray-400"
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
-            </Terminal>
-          </div>
+            </section>
+
+            {/* Info Cards */}
+            <section className="space-y-4">
+              <Container variant="subtle" className="border border-gray-900">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-600">Status</span>
+                  <span className="text-sm text-gray-200" style={{ color: "var(--accent-primary)" }}>
+                    {project.metadata.status || "Completed"}
+                  </span>
+                </div>
+              </Container>
+            </section>
+          </aside>
         </div>
       </div>
     </MainLayout>

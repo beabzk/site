@@ -29,10 +29,10 @@ const calloutConfig = {
   },
   success: {
     icon: CheckCircle,
-    bgColor: "bg-green-950/50",
-    borderColor: "border-green-500/50",
-    iconColor: "text-green-400",
-    titleColor: "text-green-300",
+    bgColor: "bg-[var(--accent-primary)]/10",
+    borderColor: "border-[var(--accent-primary)]/50",
+    iconColor: "text-[var(--accent-primary)]",
+    titleColor: "text-[var(--accent-primary)]",
   },
   error: {
     icon: XCircle,

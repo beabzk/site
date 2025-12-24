@@ -2,11 +2,10 @@
 
 import { useState, useMemo } from "react";
 import MainLayout from "../../components/layout/MainLayout";
-import Terminal from "../../components/ui/Terminal";
-import CommandPrompt from "../../components/ui/CommandPrompt";
+import Container from "../../components/ui/Container";
 import { ProjectCard } from "../../components/ui/Card";
 import { H2, P } from "../../components/ui/Typography";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, X } from "lucide-react";
 
 interface Project {
   title: string;
@@ -55,121 +54,132 @@ export default function ProjectsClient({
 
   return (
     <MainLayout>
-      <div className="space-y-8">
+      <div className="space-y-12 pb-10">
         {/* Header */}
-        <div className="space-y-4">
-          <Terminal title="projects" showControls={false} className="max-w-2xl">
-            <CommandPrompt showCursor={false}>ls -la ~/projects/</CommandPrompt>
-          </Terminal>
+        <section className="space-y-4">
+          <H2>Projects</H2>
+          <P className="max-w-2xl text-gray-400">
+            A collection of tools, utilities, and applications I&apos;ve built
+            to solve real-world problems. Each project represents a learning
+            journey and practical solution.
+          </P>
+        </section>
 
-          <div>
-            <H2>Projects Repository</H2>
-            <P className="mt-2">
-              A collection of tools, utilities, and applications I&apos;ve built
-              to solve real-world problems. Each project represents a learning
-              journey and practical solution.
-            </P>
-          </div>
-        </div>
-
-        {/* Filters */}
-        <div className="space-y-4">
-          {/* Search */}
-          <div className="relative max-w-md">
-            <Search
-              size={18}
-              className="absolute top-1/2 left-3 -translate-y-1/2 transform text-gray-400"
-            />
-            <input
-              type="text"
-              placeholder="Search projects..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-md border border-gray-800 bg-gray-950 py-2 pr-4 pl-10 font-mono text-sm text-gray-200 placeholder-gray-500 focus:border-transparent focus:ring-2 focus:ring-green-400 focus:outline-none"
-            />
-          </div>
-
-          {/* Filter Options */}
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Filter size={16} className="text-gray-400" />
-              <span className="font-mono text-sm text-gray-400">Filters:</span>
+        {/* Filters & Search */}
+        <section className="space-y-8">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            {/* Search */}
+            <div className="flex-1 max-w-md">
+              <label htmlFor="search" className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Search Projects</label>
+              <div className="relative">
+                <Search
+                  size={18}
+                  className="absolute top-1/2 left-3 -translate-y-1/2 transform text-gray-500"
+                />
+                <input
+                  id="search"
+                  type="text"
+                  placeholder="Keywords, tech, title..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full rounded-xl border border-gray-800 bg-gray-950 py-3 pr-4 pl-10 text-sm text-gray-200 placeholder-gray-600 focus:border-[var(--accent-primary)] focus:ring-0 focus:outline-none transition-colors"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-600 hover:text-gray-400"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
             </div>
 
-            <button
-              onClick={() => setShowFeaturedOnly(!showFeaturedOnly)}
-              className={`rounded-md px-3 py-1 font-mono text-xs transition-colors ${
-                showFeaturedOnly
-                  ? "bg-green-400 text-black"
-                  : "bg-gray-800 text-gray-400 hover:text-gray-200"
-              }`}
-            >
-              Featured Only
-            </button>
-          </div>
-
-          {/* Technology Tags */}
-          <div className="space-y-2">
-            <span className="font-mono text-sm text-gray-400">
-              Technologies:
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {allTags.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => toggleTag(tag)}
-                  className={`rounded px-2 py-1 font-mono text-xs transition-colors ${
-                    selectedTags.includes(tag)
-                      ? "bg-green-400 text-black"
-                      : "border border-gray-700 bg-gray-800 text-gray-400 hover:text-gray-200"
+            {/* Featured Toggle */}
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-gray-500">Show Featured Only</span>
+              <button
+                onClick={() => setShowFeaturedOnly(!showFeaturedOnly)}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${showFeaturedOnly ? "bg-[var(--accent-primary)]" : "bg-gray-800"
                   }`}
-                >
-                  {tag}
-                </button>
-              ))}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showFeaturedOnly ? "translate-x-6" : "translate-x-1"
+                    }`}
+                />
+              </button>
             </div>
           </div>
-        </div>
 
-        {/* Results Count */}
-        <div className="font-mono text-sm text-gray-500">
-          Showing {filteredProjects.length} of {allProjects.length} projects
+          {/* Technology filter */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+              <Filter size={14} />
+              <span>Filter by Technology</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {allTags.map((tag) => {
+                const isSelected = selectedTags.includes(tag);
+                return (
+                  <button
+                    key={tag}
+                    onClick={() => toggleTag(tag)}
+                    className={`rounded-full px-3 py-1 text-xs font-medium transition-all ${isSelected
+                        ? "bg-[var(--accent-primary)] text-black"
+                        : "bg-gray-950 border border-gray-800 text-gray-400 hover:border-gray-600"
+                      }`}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+              {selectedTags.length > 0 && (
+                <button
+                  onClick={() => setSelectedTags([])}
+                  className="text-xs text-gray-500 hover:text-white transition-colors underline underline-offset-4 ml-2"
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Results Info */}
+        <div className="flex items-center justify-between border-b border-gray-800 pb-2">
+          <span className="text-sm text-gray-500">
+            Found <span className="text-white font-medium">{filteredProjects.length}</span> projects
+          </span>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-2">
           {filteredProjects.map((project) => (
             <ProjectCard
               key={project.title}
               title={project.title}
               description={project.description}
               tags={project.tags}
-              size={project.size}
-              date={project.date}
               href={project.href}
             />
           ))}
         </div>
 
-        {/* No Results */}
+        {/* Empty State */}
         {filteredProjects.length === 0 && (
-          <Terminal
-            title="search-results"
-            showControls={false}
-            className="max-w-lg"
-          >
-            <div className="space-y-2">
-              <CommandPrompt showCursor={false}>
-                find . -name &quot;*{searchTerm}*&quot;
-              </CommandPrompt>
-              <div className="text-sm text-gray-400">
-                No projects found matching your criteria.
-              </div>
-              <div className="text-xs text-gray-500">
-                Try adjusting your search terms or removing some filters.
-              </div>
+          <Container variant="subtle" className="py-20 text-center border border-dashed border-gray-800">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gray-900 text-gray-600 mb-4">
+              <Search size={32} />
             </div>
-          </Terminal>
+            <h3 className="text-lg font-semibold text-white">No projects found</h3>
+            <p className="text-gray-400 mt-2">Try adjusting your filters or search term.</p>
+            <button
+              onClick={() => { setSearchTerm(""); setSelectedTags([]); setShowFeaturedOnly(false); }}
+              className="mt-6 text-sm text-[var(--accent-primary)] hover:underline"
+            >
+              Reset all filters
+            </button>
+          </Container>
         )}
       </div>
     </MainLayout>

@@ -2,8 +2,7 @@
 
 import { useEffect } from "react";
 import MainLayout from "../components/layout/MainLayout";
-import Terminal from "../components/ui/Terminal";
-import CommandPrompt from "../components/ui/CommandPrompt";
+import Container from "../components/ui/Container";
 import Button from "../components/ui/Button";
 import { H2, P } from "../components/ui/Typography";
 import { AlertTriangle, RefreshCw, Home, Bug } from "lucide-react";
@@ -21,34 +20,18 @@ export default function Error({ error, reset }: ErrorProps) {
 
   return (
     <MainLayout>
-      <div className="space-y-8 text-center">
-        {/* Terminal Error */}
-        <Terminal
-          title="system-error"
-          showControls={false}
-          className="mx-auto max-w-2xl"
-        >
-          <div className="space-y-3">
-            <CommandPrompt showCursor={false}>./run-application</CommandPrompt>
-            <div className="font-mono text-sm text-red-400">
-              Segmentation fault (core dumped)
-            </div>
-            <div className="font-mono text-sm text-gray-400">
-              Process exited with code 1
-            </div>
-            <CommandPrompt showCursor={false}>echo $?</CommandPrompt>
-            <div className="font-mono text-sm text-red-400">1</div>
-          </div>
-        </Terminal>
+      <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
+        {/* Error Icon */}
+        <div className="mb-8 rounded-full bg-red-500/10 p-6 text-red-500">
+          <AlertTriangle size={48} />
+        </div>
 
         {/* Error Message */}
         <div className="space-y-4">
-          <div className="flex items-center justify-center gap-3">
-            <AlertTriangle size={32} className="text-red-400" />
-            <H2 className="text-red-400">Something went wrong!</H2>
-          </div>
-
-          <P className="mx-auto max-w-md">
+          <H2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Something went wrong!
+          </H2>
+          <P className="mx-auto max-w-md text-gray-400">
             An unexpected error occurred while processing your request. This has
             been logged and will be investigated.
           </P>
@@ -56,108 +39,59 @@ export default function Error({ error, reset }: ErrorProps) {
 
         {/* Error Details (Development) */}
         {process.env.NODE_ENV === "development" && (
-          <Terminal
-            title="error-details"
-            showControls={false}
-            className="mx-auto max-w-2xl"
-          >
-            <div className="space-y-2 text-left text-sm">
-              <div className="font-mono text-gray-400">$ cat error.log</div>
-              <div className="font-mono text-xs break-all text-red-400">
-                {error.message}
-              </div>
-              {error.digest && (
-                <div className="font-mono text-xs text-gray-500">
-                  Error ID: {error.digest}
-                </div>
-              )}
+          <Container variant="subtle" className="mt-8 max-w-2xl border border-red-900/50 bg-red-950/10 text-left">
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-red-400">Error Details</div>
+            <div className="font-mono text-sm text-red-300 break-all">
+              {error.message}
             </div>
-          </Terminal>
+            {error.digest && (
+              <div className="mt-2 text-xs text-gray-500 font-mono">
+                Digest: {error.digest}
+              </div>
+            )}
+          </Container>
         )}
 
         {/* Recovery Options */}
-        <div className="space-y-6">
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button
-              variant="primary"
-              className="flex items-center gap-2"
-              onClick={reset}
-            >
-              <RefreshCw size={16} />
-              Try Again
-            </Button>
-
-            <Button
-              variant="secondary"
-              className="flex items-center gap-2"
-              onClick={() => (window.location.href = "/")}
-            >
-              <Home size={16} />
-              Go Home
-            </Button>
-
-            <Button
-              variant="ghost"
-              className="flex items-center gap-2"
-              onClick={() =>
-                (window.location.href =
-                  "mailto:hello@beabzk.dev?subject=Error Report&body=" +
-                  encodeURIComponent(
-                    `Error: ${error.message}\nDigest: ${error.digest || "N/A"}\nURL: ${window.location.href}`
-                  ))
-              }
-            >
-              <Bug size={16} />
-              Report Issue
-            </Button>
-          </div>
-
-          {/* Debug Info */}
-          <Terminal
-            title="debug-info"
-            showControls={false}
-            className="mx-auto max-w-lg"
+        <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <Button
+            variant="primary"
+            className="flex items-center gap-2"
+            onClick={reset}
           >
-            <div className="space-y-2 text-left text-sm">
-              <div className="font-mono text-gray-400">$ system-status</div>
-              <div className="space-y-1 font-mono text-gray-300">
-                <div>Status: Error detected</div>
-                <div>Time: {new Date().toISOString()}</div>
-                <div>
-                  Browser:{" "}
-                  {typeof window !== "undefined"
-                    ? navigator.userAgent.split(" ").pop()
-                    : "Unknown"}
-                </div>
-                <div>
-                  URL:{" "}
-                  {typeof window !== "undefined"
-                    ? window.location.pathname
-                    : "Unknown"}
-                </div>
-              </div>
-            </div>
-          </Terminal>
+            <RefreshCw size={16} />
+            Try Again
+          </Button>
+
+          <Button
+            variant="secondary"
+            className="flex items-center gap-2"
+            onClick={() => (window.location.href = "/")}
+          >
+            <Home size={16} />
+            Go Home
+          </Button>
+
+          <Button
+            variant="ghost"
+            className="flex items-center gap-2"
+            onClick={() =>
+            (window.location.href =
+              "mailto:beabzk@proton.me?subject=Error Report&body=" +
+              encodeURIComponent(
+                `Error: ${error.message}\nDigest: ${error.digest || "N/A"}\nURL: ${window.location.href}`
+              ))
+            }
+          >
+            <Bug size={16} />
+            Report Issue
+          </Button>
         </div>
 
-        {/* Helpful Message */}
-        <Terminal
-          title="recovery-tips"
-          showControls={false}
-          className="mx-auto max-w-lg"
-        >
-          <div className="space-y-2 text-left text-sm">
-            <div className="font-mono text-gray-400">
-              $ cat recovery-tips.txt
-            </div>
-            <div className="space-y-1 text-gray-300">
-              <div>• Try refreshing the page</div>
-              <div>• Check your internet connection</div>
-              <div>• Clear your browser cache</div>
-              <div>• If the problem persists, please report it</div>
-            </div>
-          </div>
-        </Terminal>
+        {/* Helpful Tips */}
+        <div className="mt-12 max-w-md text-sm text-gray-500">
+          <p>Try refreshing the page or checking your internet connection.</p>
+        </div>
       </div>
     </MainLayout>
   );

@@ -1,0 +1,24 @@
+---
+title: "Personal Finance Tracker API"
+description: "A robust and secure RESTful backend service for personal finance tracking applications."
+date: "2025-09-03"
+tags: ["Python", "Django", "REST API", "JWT", "Finance", "Backend", "Authentication"]
+github: "https://github.com/beabzk/pft-api"
+featured: false
+status: "Active"
+category: "Backend API"
+---
+
+Built with Django and Django Rest Framework, this API provides JWT user authentication, category management (CRUD), transaction management (CRUD), and simple reporting with monthly summaries. Features comprehensive security measures, scalable architecture, and extensive API documentation.
+
+## Core Features
+- **JWT User Authentication**: Secure user registration and login using JSON Web Tokens (JWT). Endpoints are protected, ensuring users can only access their own data.
+- **Category Management (CRUD)**: Users can create, view, update, and delete their own custom spending/income categories (e.g., "Groceries", "Salary").
+- **Transaction Management (CRUD)**: Users can log, view, filter, update, and delete their financial transactions, linking each to a specific category.
+- **Simple Reporting**: A dedicated endpoint provides a simple monthly summary, calculating total income, total expenses, and net savings.
+
+## Tech Stack
+- **Backend**: Python, Django
+- **API**: Django Rest Framework
+- **Authentication**: DRF Simple JWT
+- **Database**: SQLite (for development)

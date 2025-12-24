@@ -62,7 +62,10 @@ export default function ThemeSwitcher() {
                   </div>
 
                   {theme === themeOption.value && (
-                    <Check size={14} className="text-green-400" />
+                    <Check
+                      size={14}
+                      style={{ color: "var(--accent-primary)" }}
+                    />
                   )}
                 </button>
               ))}

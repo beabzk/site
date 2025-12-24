@@ -9,7 +9,7 @@ interface TypographyProps extends HTMLAttributes<HTMLElement> {
 export function H1({ children, className = "", ...props }: TypographyProps) {
   return (
     <h1
-      className={`font-mono text-4xl leading-tight font-bold text-white md:text-5xl lg:text-6xl ${className}`}
+      className={`font-sans text-4xl leading-tight font-bold text-white md:text-5xl lg:text-6xl ${className}`}
       {...props}
     >
       {children}
@@ -20,7 +20,7 @@ export function H1({ children, className = "", ...props }: TypographyProps) {
 export function H2({ children, className = "", ...props }: TypographyProps) {
   return (
     <h2
-      className={`font-mono text-3xl leading-tight font-semibold text-white md:text-4xl ${className}`}
+      className={`font-sans text-3xl leading-tight font-semibold text-white md:text-4xl ${className}`}
       {...props}
     >
       {children}
@@ -31,7 +31,7 @@ export function H2({ children, className = "", ...props }: TypographyProps) {
 export function H3({ children, className = "", ...props }: TypographyProps) {
   return (
     <h3
-      className={`font-mono text-2xl leading-snug font-medium text-white md:text-3xl ${className}`}
+      className={`font-sans text-2xl leading-snug font-medium text-white md:text-3xl ${className}`}
       {...props}
     >
       {children}
@@ -42,7 +42,7 @@ export function H3({ children, className = "", ...props }: TypographyProps) {
 export function H4({ children, className = "", ...props }: TypographyProps) {
   return (
     <h4
-      className={`font-mono text-xl leading-snug font-medium text-white md:text-2xl ${className}`}
+      className={`font-sans text-xl leading-snug font-medium text-white md:text-2xl ${className}`}
       {...props}
     >
       {children}
@@ -53,7 +53,7 @@ export function H4({ children, className = "", ...props }: TypographyProps) {
 export function H5({ children, className = "", ...props }: TypographyProps) {
   return (
     <h5
-      className={`font-mono text-lg leading-snug font-medium text-white md:text-xl ${className}`}
+      className={`font-sans text-lg leading-snug font-medium text-white md:text-xl ${className}`}
       {...props}
     >
       {children}
@@ -64,7 +64,7 @@ export function H5({ children, className = "", ...props }: TypographyProps) {
 export function H6({ children, className = "", ...props }: TypographyProps) {
   return (
     <h6
-      className={`font-mono text-base leading-snug font-medium text-white md:text-lg ${className}`}
+      className={`font-sans text-base leading-snug font-medium text-white md:text-lg ${className}`}
       {...props}
     >
       {children}
@@ -118,7 +118,8 @@ export function Muted({ children, className = "", ...props }: TypographyProps) {
 export function Code({ children, className = "", ...props }: TypographyProps) {
   return (
     <code
-      className={`rounded bg-gray-900 px-2 py-1 font-mono text-sm text-green-400 ${className}`}
+      className={`rounded bg-gray-900 px-2 py-1 font-mono text-sm ${className}`}
+      style={{ color: "var(--accent-primary)" }}
       {...props}
     >
       {children}
