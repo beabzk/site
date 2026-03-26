@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# beabzk.dev
 
-## Getting Started
+Personal site rebuilt on Astro using the Ataraxia theme as the base.
 
-First, run the development server:
+## Stack
+
+- Astro 6
+- MDX content collections
+- `pnpm`
+- RSS and sitemap generation
+
+## Routes
+
+- `/`
+- `/about`
+- `/blog`
+- `/blog/[slug]`
+- `/projects`
+- `/projects/[slug]`
+- `/tags`
+
+There is no `/uses` page and no backward-compatibility routing for the old Next.js structure.
+
+## Content
+
+- Blog posts live in `src/content/blog`
+- Projects live in `src/content/projects`
+
+Blog entries use `pubDate`. Project entries use `date`, `status`, and optional outbound links such as `github`, `demo`, `docs`, and `npm`.
+
+## Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
+pnpm astro check
+pnpm build
+pnpm preview
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Notes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Site metadata and social links are configured in `src/consts.ts`.
+- The production URL is set in `astro.config.mjs`.
+- The design is based on `inakicalvo/astro-ataraxia-theme`, adapted for blog + projects instead of the stock demo content.

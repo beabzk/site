@@ -1,0 +1,57 @@
+---
+import { Icon } from 'astro-icon/components';
+import { SITE_AUTHOR, SITE_TAGLINE, SOCIAL_LINKS } from '../consts';
+const today = new Date();
+---
+
+<footer>
+	<p class="footer-copy">&copy; {today.getFullYear()} {SITE_AUTHOR}. Built with Astro.</p>
+	<p class="footer-tagline">{SITE_TAGLINE}</p>
+	<div class="social-links">
+		{
+			SOCIAL_LINKS.map((link) => (
+				<a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+					<Icon name={link.icon} width={28} height={28} aria-hidden="true" />
+				</a>
+			))
+		}
+	</div>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 6em 1em;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+	.footer-copy,
+	.footer-tagline {
+		margin: 0;
+	}
+	.footer-tagline {
+		margin-top: 0.5rem;
+		font-size: 0.95rem;
+	}
+	.social-links {
+		display: flex;
+		justify-content: center;
+		gap: 0.9em;
+		margin-top: 1.25em;
+	}
+	.social-links a {
+		text-decoration: none;
+		color: rgb(var(--gray));
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border: 1px solid rgba(var(--gray), 0.25);
+		border-radius: 999px;
+		transition: border-color 0.2s ease, color 0.2s ease;
+	}
+	.social-links a:hover {
+		color: rgb(var(--gray-dark));
+		border-color: var(--accent);
+	}
+</style>

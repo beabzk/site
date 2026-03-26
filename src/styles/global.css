@@ -1,0 +1,278 @@
+/*
+  The CSS in this style tag is based off of Bear Blog's default CSS.
+  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
+  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+ */
+
+:root {
+	--accent: #1b7f6a;
+	--accent-dark: #0d4036;
+	--black: 25, 31, 34;
+	--gray: 108, 117, 122;
+	--gray-light: 226, 226, 219;
+	--gray-dark: 42, 48, 53;
+	--gray-gradient: rgba(244, 239, 229, 0.95), #faf7f2;
+	--nav-text: rgb(var(--gray-dark));
+	--border-color: #ddd5c8;
+	--text-color: rgb(var(--gray-dark));
+	--bg-color: #faf7f2;
+	--header-bg: rgba(250, 247, 242, 0.88);
+	--code-bg: #efe9de;
+	--card-bg: rgba(255, 255, 255, 0.74);
+	--footer-text: rgba(var(--gray-dark), 0.76);
+	--surface-border: rgba(63, 72, 77, 0.12);
+	--heading-color: rgb(var(--black));
+}
+
+[data-theme="dark"] {
+	--accent: #7ce38a;
+	--accent-dark: #10351a;
+	--black: 242, 245, 247;
+	--gray: 142, 155, 164;
+	--gray-light: 46, 58, 66;
+	--gray-dark: 223, 230, 235;
+	--gray-gradient: rgba(17, 22, 27, 0.96), #0b1014;
+	--nav-text: rgb(var(--gray-dark));
+	--border-color: rgba(124, 227, 138, 0.16);
+	--text-color: rgb(var(--gray-dark));
+	--bg-color: #0b1014;
+	--header-bg: rgba(11, 16, 20, 0.86);
+	--code-bg: #172028;
+	--card-bg: rgba(18, 25, 30, 0.82);
+	--footer-text: rgba(var(--gray), 0.9);
+	--surface-border: rgba(124, 227, 138, 0.16);
+	--heading-color: rgb(var(--black));
+}
+body {
+	font-family: var(--font-atkinson), sans-serif;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background:
+		radial-gradient(circle at top left, rgba(27, 127, 106, 0.12), transparent 30%),
+		radial-gradient(circle at top right, rgba(17, 22, 27, 0.08), transparent 24%),
+		linear-gradient(var(--gray-gradient)) no-repeat;
+	background-size: auto, auto, 100% 720px;
+	background-color: var(--bg-color);
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	color: var(--text-color);
+	font-size: 19px;
+	line-height: 1.7;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+main {
+	width: min(1120px, calc(100% - 2em));
+	margin: auto;
+	padding: 3.5em 1em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0 0 0.5rem 0;
+	color: rgb(var(--black));
+	line-height: 1.2;
+}
+h1 {
+	font-size: 2.5rem;
+}
+h2 {
+	font-size: 2rem;
+}
+h3 {
+	font-size: 1.75rem;
+}
+h4 {
+	font-size: 1.5rem;
+}
+h5 {
+	font-size: 1.25rem;
+}
+strong,
+b {
+	font-weight: 700;
+}
+a {
+	color: var(--accent);
+}
+a:hover {
+	color: var(--accent);
+}
+a:focus {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+button:focus {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+p {
+	margin-bottom: 1em;
+}
+.prose p {
+	margin-bottom: 2em;
+}
+textarea {
+	width: 100%;
+	font-size: 16px;
+}
+input {
+	font-size: 16px;
+}
+table {
+	width: 100%;
+}
+img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+ul,
+ol {
+	padding-left: 1.2em;
+}
+code {
+	padding: 2px 5px;
+	background-color: var(--code-bg);
+	border-radius: 2px;
+	color: var(--text-color);
+	font-family: var(--font-atkinson-mono), monospace;
+}
+pre {
+	padding: 1.5em;
+	border-radius: 8px;
+}
+pre > code {
+	all: unset;
+	font-family: var(--font-atkinson-mono), monospace;
+}
+blockquote {
+	border-left: 4px solid var(--accent);
+	padding: 0 0 0 20px;
+	margin: 0px;
+	font-size: 1.333em;
+}
+hr {
+	border: none;
+	border-top: 1px solid rgb(var(--gray-light));
+}
+.eyebrow {
+	margin: 0 0 1rem 0;
+	font-size: 0.82rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.lede {
+	font-size: 1.15rem;
+	color: var(--footer-text);
+	max-width: 42rem;
+}
+.section-heading {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+.section-heading p {
+	margin: 0;
+	color: var(--footer-text);
+}
+.card-grid {
+	display: grid;
+	gap: 1.5rem;
+}
+.surface-card {
+	background: var(--card-bg);
+	border: 1px solid var(--surface-border);
+	border-radius: 22px;
+}
+.button-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	padding: 0.78rem 1.15rem;
+	border-radius: 999px;
+	border: 1px solid transparent;
+	text-decoration: none;
+	font-weight: 700;
+	transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.button-link-primary {
+	background: var(--accent);
+	color: white;
+}
+.button-link-secondary {
+	background: transparent;
+	color: var(--text-color);
+	border-color: var(--surface-border);
+}
+:global([data-theme="dark"]) .button-link-primary {
+	color: var(--accent-dark);
+}
+.chip-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.55rem;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.32rem 0.74rem;
+	border-radius: 999px;
+	background: rgba(var(--gray), 0.1);
+	border: 1px solid var(--surface-border);
+	font-size: 0.82rem;
+	font-weight: 600;
+}
+@media (max-width: 720px) {
+	body {
+		font-size: 18px;
+	}
+	main {
+		width: calc(100% - 1.5em);
+		padding: 2em 0.75em;
+	}
+	h1 {
+		font-size: 2rem;
+	}
+	h2 {
+		font-size: 1.75rem;
+	}
+	h3 {
+		font-size: 1.5rem;
+	}
+	h4 {
+		font-size: 1.25rem;
+	}
+	.section-heading {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
+
+.sr-only:not(:focus):not(:active) {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+	clip: rect(1px 1px 1px 1px);
+	/* maybe deprecated but we need to support legacy browsers */
+	clip: rect(1px, 1px, 1px, 1px);
+	/* modern browsers, clip-path works inwards from each corner */
+	clip-path: inset(50%);
+	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+	white-space: nowrap;
+}

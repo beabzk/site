@@ -1,0 +1,242 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TAGLINE, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+const allProjects = await getCollection('projects');
+const allPosts = await getCollection('blog');
+
+const featuredProjects = allProjects
+	.filter((project) => project.data.featured)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+	.slice(0, 4);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.hero {
+				display: grid;
+				grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+				gap: 1.5rem;
+				align-items: stretch;
+			}
+			.hero-copy,
+			.hero-aside,
+			.post-card,
+			.project-card {
+				padding: 1.75rem;
+			}
+			.hero-copy h1 {
+				font-size: clamp(3rem, 6vw, 5rem);
+				line-height: 0.95;
+				letter-spacing: -0.05em;
+				max-width: 12ch;
+				margin-bottom: 1rem;
+			}
+			.hero-copy p {
+				max-width: 38rem;
+			}
+			.hero-actions {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.75rem;
+				margin-top: 2rem;
+			}
+			.hero-note {
+				margin-top: 2rem;
+				padding-top: 1.25rem;
+				border-top: 1px solid var(--surface-border);
+				color: var(--footer-text);
+				font-size: 0.96rem;
+			}
+			.hero-aside {
+				display: grid;
+				align-content: space-between;
+				gap: 1rem;
+			}
+			.signal {
+				display: grid;
+				gap: 1rem;
+			}
+			.signal-item {
+				display: grid;
+				gap: 0.25rem;
+				padding: 1rem 0;
+				border-bottom: 1px solid var(--surface-border);
+			}
+			.signal-item:last-child {
+				border-bottom: none;
+				padding-bottom: 0;
+			}
+			.signal-label {
+				font-size: 0.76rem;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: var(--accent);
+				font-weight: 700;
+			}
+			.signal-value {
+				font-size: 1.12rem;
+				font-weight: 700;
+			}
+			.two-column {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1.5rem;
+				margin-top: 3rem;
+			}
+			.project-list,
+			.post-list {
+				display: grid;
+				gap: 1.25rem;
+			}
+			.project-card,
+			.post-card {
+				text-decoration: none;
+				color: inherit;
+				transition: border-color 0.2s ease;
+			}
+			.project-card:hover,
+			.post-card:hover {
+				border-color: var(--accent);
+			}
+			.card-meta {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.75rem;
+				font-size: 0.82rem;
+				color: var(--footer-text);
+				margin-bottom: 0.9rem;
+			}
+			.card-title {
+				margin-bottom: 0.6rem;
+				font-size: 1.45rem;
+			}
+			.card-description {
+				margin: 0 0 1rem 0;
+				color: var(--footer-text);
+			}
+			.section-link {
+				font-weight: 700;
+				text-decoration: none;
+			}
+			@media (max-width: 960px) {
+				.hero,
+				.two-column {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main id="main">
+			<section class="hero">
+				<div class="hero-copy surface-card">
+					<p class="eyebrow">beabzk.dev</p>
+					<h1>Software with less theater and more utility.</h1>
+					<p class="lede">
+						I&apos;m {SITE_AUTHOR}, a full-stack developer working mostly in Python and TypeScript.
+						I like practical tools, clear interfaces, strong APIs, and systems that stay understandable after the first week.
+					</p>
+					<div class="hero-actions">
+						<a class="button-link button-link-primary" href="/projects">See projects</a>
+						<a class="button-link button-link-secondary" href="/blog">Read the blog</a>
+					</div>
+					<p class="hero-note">{SITE_TAGLINE}</p>
+				</div>
+				<aside class="hero-aside surface-card">
+					<div>
+						<p class="eyebrow">Current Focus</p>
+						<div class="signal">
+							<div class="signal-item">
+								<span class="signal-label">Work</span>
+								<span class="signal-value">Developer tooling, APIs, and web products</span>
+							</div>
+							<div class="signal-item">
+								<span class="signal-label">Published</span>
+								<span class="signal-value">{allProjects.length} projects, {allPosts.length} posts</span>
+							</div>
+							<div class="signal-item">
+								<span class="signal-label">Stack</span>
+								<span class="signal-value">Python, TypeScript, Astro, React</span>
+							</div>
+						</div>
+					</div>
+					<p class="lede" style="margin: 0;">
+						This site is where I collect shipped work, experiments, and notes from building things in public.
+					</p>
+				</aside>
+			</section>
+
+			<div class="two-column">
+				<section>
+					<div class="section-heading">
+						<div>
+							<p class="eyebrow">Projects</p>
+							<h2>Featured work</h2>
+						</div>
+						<a class="section-link" href="/projects">All projects</a>
+					</div>
+					<div class="project-list">
+						{
+							featuredProjects.map((project) => (
+								<a class="project-card surface-card" href={`/projects/${project.id}/`}>
+									<div class="card-meta">
+										<span>{project.data.status}</span>
+										{project.data.category && <span>{project.data.category}</span>}
+									</div>
+									<h3 class="card-title">{project.data.title}</h3>
+									<p class="card-description">{project.data.description}</p>
+									<ul class="chip-list">
+										{project.data.tags.slice(0, 4).map((tag) => <li class="chip">{tag}</li>)}
+									</ul>
+								</a>
+							))
+						}
+					</div>
+				</section>
+
+				<section>
+					<div class="section-heading">
+						<div>
+							<p class="eyebrow">Writing</p>
+							<h2>Latest notes</h2>
+						</div>
+						<a class="section-link" href="/blog">All posts</a>
+					</div>
+					<div class="post-list">
+						{
+							posts.map((post) => (
+								<a class="post-card surface-card" href={`/blog/${post.id}/`}>
+									<div class="card-meta">
+										<span>{post.data.pubDate.toLocaleDateString('en-US', {
+											year: 'numeric',
+											month: 'short',
+											day: 'numeric',
+										})}</span>
+									</div>
+									<h3 class="card-title">{post.data.title}</h3>
+									<p class="card-description">{post.data.description}</p>
+									<ul class="chip-list">
+										{post.data.tags.slice(0, 4).map((tag) => <li class="chip">{tag}</li>)}
+									</ul>
+								</a>
+							))
+						}
+					</div>
+				</section>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

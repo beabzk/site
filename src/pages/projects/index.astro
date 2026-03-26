@@ -1,0 +1,102 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import ProjectTagList from '../../components/ProjectTagList.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const projects = (await getCollection('projects')).sort((a, b) => {
+	if (a.data.featured !== b.data.featured) {
+		return Number(b.data.featured) - Number(a.data.featured);
+	}
+
+	return b.data.date.valueOf() - a.data.date.valueOf();
+});
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Projects - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			.projects-header {
+				display: grid;
+				gap: 1rem;
+				margin-bottom: 2rem;
+			}
+			.project-grid {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1.5rem;
+			}
+			.project-card {
+				display: grid;
+				gap: 1rem;
+				padding: 1.5rem;
+				text-decoration: none;
+				color: inherit;
+				transition: border-color 0.2s ease;
+			}
+			.project-card:hover {
+				border-color: var(--accent);
+			}
+			.project-meta {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.65rem;
+				font-size: 0.84rem;
+				color: var(--footer-text);
+			}
+			.project-meta span {
+				display: inline-flex;
+				align-items: center;
+				padding: 0.28rem 0.62rem;
+				border-radius: 999px;
+				background: rgba(var(--gray), 0.08);
+				border: 1px solid var(--surface-border);
+			}
+			.project-card p {
+				margin: 0;
+			}
+			.project-card h2 {
+				margin-bottom: 0;
+			}
+			@media (max-width: 900px) {
+				.project-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main id="main">
+			<section class="projects-header">
+				<p class="eyebrow">Projects</p>
+				<h1>Work that shipped or taught me something worth keeping.</h1>
+				<p class="lede">
+					A mix of libraries, APIs, and applications. Some are polished, some are still evolving, but all of them represent real problems I cared enough to solve.
+				</p>
+			</section>
+
+			<section class="project-grid">
+				{
+					projects.map((project) => (
+						<a class="project-card surface-card" href={`/projects/${project.id}/`}>
+							<div class="project-meta">
+								<span>{project.data.status}</span>
+								{project.data.category && <span>{project.data.category}</span>}
+								{project.data.featured && <span>Featured</span>}
+							</div>
+							<h2>{project.data.title}</h2>
+							<p>{project.data.description}</p>
+							<ProjectTagList tags={project.data.tags.slice(0, 5)} />
+						</a>
+					))
+				}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

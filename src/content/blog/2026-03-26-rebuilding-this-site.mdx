@@ -1,0 +1,43 @@
+---
+title: "Rebuilding This Site on Astro"
+description: "Why I moved the site to Astro, what changed, and what I wanted the new version to optimize for."
+pubDate: "2026-03-26"
+tags: ["astro", "web", "migration"]
+---
+
+I rebuilt this site because the old version was heavier than the problem required.
+
+It worked, but it carried more framework surface area, more styling drift, and more client-side behavior than a content-first portfolio really needed. The site is mostly writing and project pages, so the right question was not _what can this stack do_, but _what is the minimum needed to ship a fast, maintainable result_.
+
+## Why Astro
+
+Astro fits this kind of site well:
+
+- static output by default,
+- MDX content collections,
+- straightforward routing,
+- and very little JavaScript unless I choose to add it.
+
+That let me keep the focus on the actual content instead of spending time maintaining app-like structure for pages that are fundamentally documents.
+
+## What Changed
+
+The new site is intentionally narrower in scope.
+
+- The blog now lives at `/blog`.
+- Projects remain a first-class section at `/projects`.
+- The old `/uses` page is gone.
+- The design system is simpler and the theme handling is lighter.
+
+I also wanted the visual tone to feel quieter and more editorial without becoming sterile.
+
+## What I Want From It
+
+The standard is simple:
+
+- pages should load quickly,
+- content should be readable on a phone or a laptop,
+- project pages should make the work legible,
+- and the site should be easy to evolve without a full rewrite every few months.
+
+That is the main reason for the migration. Less ceremony, less drag, and a better place to keep the work.

@@ -1,0 +1,139 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SOCIAL_LINKS, SITE_AUTHOR, SITE_TITLE } from '../consts';
+
+const skills = {
+	Languages: ['Python', 'TypeScript', 'JavaScript', 'Go', 'Rust', 'SQL'],
+	Frontend: ['Astro', 'React', 'Next.js', 'Tailwind CSS', 'HTML', 'CSS'],
+	Backend: ['Node.js', 'Django', 'Express', 'PostgreSQL'],
+	Tools: ['Git', 'Docker', 'AWS', 'Vercel', 'Linux'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`About - ${SITE_TITLE}`}
+			description="About beabzk, a full-stack developer focused on practical software and clear systems."
+		/>
+		<style>
+			.about-grid {
+				display: grid;
+				grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+				gap: 1.5rem;
+			}
+			.story,
+			.sidebar,
+			.skill-card {
+				padding: 1.75rem;
+			}
+			.story p:last-child {
+				margin-bottom: 0;
+			}
+			.sidebar {
+				display: grid;
+				gap: 1rem;
+				align-content: start;
+			}
+			.contact-list {
+				display: grid;
+				gap: 0.85rem;
+				padding: 0;
+				margin: 0;
+				list-style: none;
+			}
+			.contact-list a {
+				text-decoration: none;
+				font-weight: 600;
+			}
+			.skills-grid {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1.25rem;
+				margin-top: 2rem;
+			}
+			.skill-card h3 {
+				font-size: 1rem;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				margin-bottom: 1rem;
+			}
+			@media (max-width: 900px) {
+				.about-grid,
+				.skills-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header/>
+		<main id="main">
+			<div class="section-heading">
+				<div>
+					<p class="eyebrow">About</p>
+					<h1>{SITE_AUTHOR}</h1>
+				</div>
+			</div>
+
+			<section class="about-grid">
+				<div class="story surface-card">
+					<p class="lede">
+						I build software with a focus on clarity, durability, and usefulness. The work that interests me most sits at the intersection of backend systems, developer tooling, and interfaces that stay out of the way.
+					</p>
+					<p>
+						My approach is simple: keep the surface area understandable, make the important paths reliable, and avoid complexity that only looks impressive in screenshots. I enjoy turning messy requirements into products that feel calm to use.
+					</p>
+					<p>
+						This site is a small record of that work: projects I&apos;ve shipped, notes from learning in public, and the stack I come back to when I want to move quickly without losing control of the system.
+					</p>
+				</div>
+
+				<aside class="sidebar">
+					<div class="surface-card" style="padding: 1.5rem;">
+						<p class="eyebrow">Contact</p>
+						<ul class="contact-list">
+							{SOCIAL_LINKS.map((link) => (
+								<li>
+									<a href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">
+										{link.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+					<div class="surface-card" style="padding: 1.5rem;">
+						<p class="eyebrow">Status</p>
+						<p style="margin: 0 0 0.4rem 0; font-weight: 700;">Open to practical, well-scoped work.</p>
+						<p style="margin: 0; color: var(--footer-text);">Remote / Global</p>
+					</div>
+				</aside>
+			</section>
+
+			<section style="margin-top: 2.75rem;">
+				<div class="section-heading">
+					<div>
+						<p class="eyebrow">Skills</p>
+						<h2>Preferred tools and domains</h2>
+					</div>
+				</div>
+				<div class="skills-grid">
+					{
+						Object.entries(skills).map(([category, items]) => (
+							<div class="skill-card surface-card">
+								<h3>{category}</h3>
+								<ul class="chip-list">
+									{items.map((item) => <li class="chip">{item}</li>)}
+								</ul>
+							</div>
+						))
+					}
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
