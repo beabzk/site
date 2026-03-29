@@ -1,4 +1,4 @@
-export const SITE_TITLE = 'beabzk.dev';
+export const SITE_TITLE = 'beabzk';
 export const SITE_DESCRIPTION =
 	'Full-stack developer building practical tools, APIs, and thoughtful interfaces with Python and TypeScript.';
 export const SITE_AUTHOR = 'beabzk';

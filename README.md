@@ -1,4 +1,4 @@
-# beabzk.dev
+# beabzk
 
 Personal site rebuilt on Astro using the Ataraxia theme as the base.
 
