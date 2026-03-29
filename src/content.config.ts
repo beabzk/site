@@ -13,6 +13,7 @@ const blog = defineCollection({
 			heroImage: image().optional(),
 			heroImageAlt: z.string().optional(),
 			tags: z.array(z.string()).min(1, 'At least one tag is required'),
+			draft: z.boolean().optional().default(false),
 		}),
 });
 
@@ -30,6 +31,7 @@ const projects = defineCollection({
 		featured: z.boolean().optional(),
 		status: z.enum(['Active', 'Archived', 'In Development', 'Maintenance']),
 		category: z.string().optional(),
+		draft: z.boolean().optional().default(false),
 	}),
 });
 

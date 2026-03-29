@@ -6,7 +6,7 @@ import Header from '../../components/Header.astro';
 import ProjectTagList from '../../components/ProjectTagList.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-const projects = (await getCollection('projects')).sort((a, b) => {
+const projects = (await getCollection('projects', ({ data }) => import.meta.env.DEV || !data.draft)).sort((a, b) => {
 	if (a.data.featured !== b.data.featured) {
 		return Number(b.data.featured) - Number(a.data.featured);
 	}
