@@ -19,9 +19,6 @@ const posts = (await getCollection('blog', ({ data }) => import.meta.env.DEV || 
 	<head>
 		<BaseHead title=`Blog - ${SITE_TITLE}` description={SITE_DESCRIPTION} />
 		<style>
-			main {
-				width: 720px;
-			}
 			.blog-header {
 				text-align: center;
 				margin-bottom: 3rem;
