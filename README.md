@@ -19,8 +19,6 @@ Personal site rebuilt on Astro using the Ataraxia theme as the base.
 - `/projects/[slug]`
 - `/tags`
 
-There is no `/uses` page and no backward-compatibility routing for the old Next.js structure.
-
 ## Content
 
 - Blog posts live in `src/content/blog`

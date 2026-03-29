@@ -4,12 +4,6 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SOCIAL_LINKS, SITE_AUTHOR, SITE_TITLE } from '../consts';
 
-const skills = {
-	Languages: ['Python', 'TypeScript', 'JavaScript', 'Go', 'Rust', 'SQL'],
-	Frontend: ['Astro', 'React', 'Next.js', 'Tailwind CSS', 'HTML', 'CSS'],
-	Backend: ['Node.js', 'Django', 'Express', 'PostgreSQL'],
-	Tools: ['Git', 'Docker', 'AWS', 'Vercel', 'Linux'],
-};
 ---
 
 <!doctype html>
@@ -26,8 +20,7 @@ const skills = {
 				gap: 1.5rem;
 			}
 			.story,
-			.sidebar,
-			.skill-card {
+			.sidebar {
 				padding: 1.75rem;
 			}
 			.story p:last-child {
@@ -49,21 +42,8 @@ const skills = {
 				text-decoration: none;
 				font-weight: 600;
 			}
-			.skills-grid {
-				display: grid;
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 1.25rem;
-				margin-top: 2rem;
-			}
-			.skill-card h3 {
-				font-size: 1rem;
-				text-transform: uppercase;
-				letter-spacing: 0.12em;
-				margin-bottom: 1rem;
-			}
 			@media (max-width: 900px) {
-				.about-grid,
-				.skills-grid {
+				.about-grid {
 					grid-template-columns: 1fr;
 				}
 			}
@@ -82,13 +62,13 @@ const skills = {
 			<section class="about-grid">
 				<div class="story surface-card">
 					<p class="lede">
-						I build software with a focus on clarity, durability, and usefulness. The work that interests me most sits at the intersection of backend systems, developer tooling, and interfaces that stay out of the way.
+						Hey, I&apos;m {SITE_AUTHOR}. I’m a student and a hobbyist. I study mechanical engineering, but I spend a lot of my free time programming. I build things to learn how they work.
 					</p>
 					<p>
-						My approach is simple: keep the surface area understandable, make the important paths reliable, and avoid complexity that only looks impressive in screenshots. I enjoy turning messy requirements into products that feel calm to use.
+						My background is in the physical world, but I treat code as just another tool in the toolbox. I write software to automate my routines, build utilities for things I enjoy, and fix daily annoyances. I don't claim to be an expert in either field yet, but I like solving my own problems.
 					</p>
 					<p>
-						This site is a small record of that work: projects I&apos;ve shipped, notes from learning in public, and the stack I come back to when I want to move quickly without losing control of the system.
+						This site is a small record of that work: projects I&apos;ve built, notes from learning in public, and the tools I use to fix my daily annoyances.
 					</p>
 				</div>
 
@@ -105,33 +85,7 @@ const skills = {
 							))}
 						</ul>
 					</div>
-					<div class="surface-card" style="padding: 1.5rem;">
-						<p class="eyebrow">Status</p>
-						<p style="margin: 0 0 0.4rem 0; font-weight: 700;">Open to practical, well-scoped work.</p>
-						<p style="margin: 0; color: var(--footer-text);">Remote / Global</p>
-					</div>
 				</aside>
-			</section>
-
-			<section style="margin-top: 2.75rem;">
-				<div class="section-heading">
-					<div>
-						<p class="eyebrow">Skills</p>
-						<h2>Preferred tools and domains</h2>
-					</div>
-				</div>
-				<div class="skills-grid">
-					{
-						Object.entries(skills).map(([category, items]) => (
-							<div class="skill-card surface-card">
-								<h3>{category}</h3>
-								<ul class="chip-list">
-									{items.map((item) => <li class="chip">{item}</li>)}
-								</ul>
-							</div>
-						))
-					}
-				</div>
 			</section>
 		</main>
 		<Footer />

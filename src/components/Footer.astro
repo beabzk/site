@@ -1,12 +1,13 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { SITE_AUTHOR, SITE_TAGLINE, SOCIAL_LINKS } from '../consts';
+import { SITE_AUTHOR, TAGLINES, SOCIAL_LINKS } from '../consts';
 const today = new Date();
+const randomTagline = TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
 ---
 
 <footer>
 	<p class="footer-copy">&copy; {today.getFullYear()} {SITE_AUTHOR}. Built with Astro.</p>
-	<p class="footer-tagline">{SITE_TAGLINE}</p>
+	<p class="footer-tagline" id="footer-tagline">{randomTagline}</p>
 	<div class="social-links">
 		{
 			SOCIAL_LINKS.map((link) => (
@@ -55,3 +56,12 @@ const today = new Date();
 		border-color: var(--accent);
 	}
 </style>
+
+<script>
+	import { TAGLINES } from '../consts';
+	
+	const taglineElement = document.getElementById('footer-tagline');
+	if (taglineElement) {
+		taglineElement.textContent = TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
+	}
+</script>

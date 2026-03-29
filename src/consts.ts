@@ -1,9 +1,12 @@
 export const SITE_TITLE = 'beabzk';
 export const SITE_DESCRIPTION =
-	'Full-stack developer building practical tools, APIs, and thoughtful interfaces with Python and TypeScript.';
+	'Mechanical engineering student and hobbyist programmer building things to learn how they work.';
 export const SITE_AUTHOR = 'beabzk';
-export const SITE_TAGLINE =
-	'Practical software, clear systems, and a bias toward shipping.';
+export const TAGLINES = [
+	'A jack of all trades is a master of none, but oftentimes better than a master of one',
+	'Building things to learn how they work.',
+	'Less theater, more utility.',
+];
 
 export const SOCIAL_LINKS = [
 	{
