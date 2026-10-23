@@ -8,9 +8,9 @@ draft: false
 
 # How I Got an Always-Free 12GB RAM VPS on Oracle Cloud
 
-If you are a developer in Ethiopia, you know the struggle: you want to host personal projects, a bot, or a self-hosted platform, but you hit the infamous forex wall. Local cards don't work on global cloud providers, and international platforms love to reject virtual cards.
+If you are a developer in Ethiopia, you know the struggle: you want to host personal projects, a bot, or a self-hosted platform, but you hit the infamous forex wall. Local cards don't work on global cloud providers, and international platforms love to reject virtual cards. Oracle is especially strict when it comes to virtual cards. But recently they seem to have loosened the restriction and I was able to sign up for their free tier using a Bybit virtual card.
 
-Recently, I managed to get a fully provisioned, **Always-Free Tier** virtual machine on **Oracle Cloud Infrastructure (OCI)** with these specs:
+I managed to get a fully provisioned, **Always-Free Tier** virtual machine on **Oracle Cloud Infrastructure (OCI)** with these specs:
 
 - **CPU:** 2 OCPUs (dedicated ARM Neoverse-N1 cores)
 - **RAM:** 12 GB
@@ -26,26 +26,26 @@ Here is the exact step-by-step guide on how I did it, including the payment card
 
 Oracle Cloud requires a credit or debit card during registration to verify your identity. They perform a temporary hold (around $1.00 USD) and immediately refund it.
 
-I used my **Bybit Visa Card** (labeled _Visa Platinum_). You don't need access to local bank forex queues. If you have USDT or crypto on Bybit, you can fund your Bybit Card, and Oracle's payment processor accepts it without flagging it as an unsupported prepaid card. Make sure your card has at least $2–$5 worth of balance available before starting so the verification charge doesn't fail.
+I used my **Bybit Visa Card** (labeled _Visa Platinum_). You don't need access to local bank forex. If you have USDT or crypto on Bybit, you can fund your Bybit Card, and Oracle's payment processor accepts it without flagging it as an unsupported prepaid card. Make sure your card has at least $2–$5 worth of balance available before starting so the verification charge doesn't fail.
 
 ---
 
 ## 2. Choosing Your Home Region
 
-During sign-up, you must pick a **Home Region**. I picked **Germany Central (Frankfurt)** (`eu-frankfurt-1`). It offers great ping to East Africa and Europe. However, Frankfurt is high-demand, which leads to a hardware capacity bottleneck (more on how to beat that in Step 5).
+During sign-up, you must pick a **Home Region**. I picked **Germany Central (Frankfurt)** (`eu-frankfurt-1`). It offers great ping to East Africa and Europe. However, Frankfurt is high-demand, which leads to a hardware capacity bottleneck (more on how to beat that in [Step 5](#5-out-of-host-capacity)).
 
 ---
 
-## 3. The "VCN Trap" (Do This First!)
+## 3. Configure a network
 
 Before spinning up the server, **do not let the VM creation wizard create your network automatically**. There is a bug where inline networks can leave your VM without an Internet Gateway or a public IP address.
 
 Instead, build your network first:
 
-1. Open the top-left menu → **Networking** → **Virtual cloud networks**.
-2. Click **Start VCN Wizard** _(not "Create VCN")_.
+1. Open the top-left menu → **Networking** → **[Virtual cloud networks](https://cloud.oracle.com/networking/vcns)**.
+2. Click **Actions → Start VCN Wizard** _(not "Create VCN")_.
 3. Choose **Create VCN with Internet Connectivity** → **Start VCN Wizard**.
-4. Name it `my-vcn` or whatever, leave all default CIDR blocks as they are, and click **Create**.
+4. Name it `my-vcn` or whatever, leave all default CIDR blocks as they are, and complete the wizard.
 
 Now your Virtual Cloud Network has an Internet Gateway and a functional Public Subnet ready to go.
 
@@ -54,38 +54,37 @@ Now your Virtual Cloud Network has an Internet Gateway and a functional Public S
 
 ## 4. Configuring the Compute Instance
 
-Go to **Compute** → **Instances** → **Create Instance**. Here are the critical settings:
+Go to **Compute** → **Instances** → **[Create Instance](https://cloud.oracle.com/compute/instances/create)**. Here are the settings:
 
-### A. The OS Image (Don't pick standard x86!)
+### A. The OS Image
 
-- Under **Image**, click **Change Image**.
-- Filter for **Oracle Linux 9.x ARM** (or Ubuntu Minimal).
-- Choose the ARM image so you get the free ARM shape.
+- Under **Image**, click **Change Image**. By default *Oracle Linux 9* might be selected.
+- I prefer Ubuntu but you can go with whatever OS you want as long as it's the ARM version (labled aarch64).
+- Choose the ARM image so you get the free ARM shape. I went with *Canonical Ubuntu 24.04 Minimal aarch64*.
 
 ### B. The Shape
 
-- Select **VM.Standard.A1.Flex**.
-- This is the only ARM shape in the Always-Free tier.
+- By default, *VM.Standard.A1.Flex* will be selected with an *Always Free-eligible* badge next to it.
+- Click **Change shape** and make sure *Virtual machine* Instance type and *Ampere* Shape series is selected.
+- Under the Image section you will see *VM.Standard.A1.Flex* listed. Click the small triangle left of the name to expand and reveal the *Shape details*.
+- Increase *Number of OCPUs* to 2 using the increase arrow to the right of the input and the *Amount of memory (GB)* should also increase to 12.
+- Click on **Select shape** button
 
 ### C. Networking & Public IP
 
-- Under **Attach public IPv4 address**, make sure toggle is **ON**.
+- Under **Primary VNIC**, *Primary network*, select "Select existing virtual cloud network" and it should auto populate the network you created earlier in [Step 3](#3-configure-a-network).
+- Under **Attach public IPv4 address**, make sure toggle is **ON**. It should be ON by default if you configured the steps above properly.
 
 ### D. SSH Keys
 
-- Click **Generate a key pair for me** and click **Download private key**.
+- Make sure **Generate a key pair for me** and click **Download private key** and save both keys to a safe directory on your computer.
 - ⚠️ **Do not skip this:** Save that `.key` file. You will not be able to log in without it.
 
-### E. Storage (Maximize your 200 GB)
+### E. Storage
 
 - Under **Storage**, check **Specify a custom boot volume size**.
-- Change the default from 46.6 GB to **`200` GB**.
+- Change the default *Boot volume size (GB)* from 50 to **200**. That's the maximum you get on the Always-Free Tier.
 - _Bonus:_ Disk throughput scales with size. A 200 GB volume runs at **96 MB/s** compared to just 24 MB/s on the default size.
-
----
-
-
-
 
 ---
 
@@ -99,15 +98,12 @@ Frankfurt has three separate data center buildings: `AD-1`, `AD-2`, and `AD-3`. 
 
 1. Go back to the **Placement** section.
 2. Switch the Availability Domain from **AD-3** to **AD-1**.
-3. Hit **Create**.
-
-_(AD-1 worked immediately for me! If AD-1 is full, try AD-2)._
 
 ---
 
 ## 6. Connecting from Windows
 
-Once the instance turns green (**Running**), find your **Public IP Address**.
+Once the instance turns green (**Running**), find your **Public IP Address**. It should be listed on the [Instances page](https://cloud.oracle.com/compute/instances).
 
 If you are using Windows PowerShell and OpenSSH, you might see this error when connecting:
 
@@ -127,7 +123,7 @@ icacls.exe "$HOME\.ssh\your-key-name.key" /inheritance:r
 # Grant read access only to your personal Windows account
 icacls.exe "$HOME\.ssh\your-key-name.key" /grant:r "$($env:USERNAME):(R)"
 ```
-Replace the files paths with your actual .key file location.
+Replace the file paths with your actual `.key` file location.
 
 Now you can connect smoothly:
 
@@ -165,3 +161,5 @@ Verify everything by running `free -h` or checking with `fastfetch`!
 In less than 15 minutes, you have a 12 GB server running 24/7 without paying a single Birr or dollar.
 
 If you are building projects from Ethiopia, grab a Bybit card, follow this setup, and take full advantage of Oracle's Always Free tier!
+
+Feel free to [contact](../../contact) me for any questions you might have.

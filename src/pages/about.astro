@@ -10,8 +10,4 @@ import { SOCIAL_LINKS, SITE_AUTHOR, SITE_TITLE } from '../consts';
     <p>My background is in the physical world, but I treat code as just another tool in the toolbox. I write software to automate my routines, build utilities for things I enjoy, and fix daily annoyances. I don't claim to be an expert in either field yet, but I like solving my own problems.</p>
     <p>This site is a small record of that work: projects I&apos;ve built, notes from learning in public, and the tools I use to fix my daily annoyances.</p>
   </section>
-  <section class="contact-section" aria-labelledby="contact-title">
-    <h2 id="contact-title">Contact</h2>
-    <div class="contact-links">{SOCIAL_LINKS.map((link) => <span>[<a href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">{link.label}</a>]</span>)}</div>
-  </section>
 </Base>

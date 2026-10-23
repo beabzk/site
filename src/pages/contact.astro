@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { SOCIAL_LINKS } from '../consts';
+---
+
+<Base title={`Contact - beabzk`} description="Get in touch with beabzk. Find me on GitHub, LinkedIn, X, Telegram, or email.">
+  <header class="page-heading"><p class="eyebrow">Contact</p><h1>Contact</h1><p>Get in touch with beabzk. I&apos;m always open to discussing projects, collaborations, or just a friendly message.</p></header>
+
+  <section class="contact-section" aria-labelledby="contact-methods">
+    <h2 id="contact-methods">Ways to reach me</h2>
+    <div class="contact-links">
+      {SOCIAL_LINKS.map((link) => <span>[{link.label.toLowerCase()}: <a href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">{link.href.startsWith('mailto:') ? link.href.slice(7) : '@beabzk'}</a>]</span>)}
+    </div>
+  </section>
+</Base>

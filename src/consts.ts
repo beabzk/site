@@ -20,6 +20,16 @@ export const SOCIAL_LINKS = [
 		icon: 'mdi:linkedin',
 	},
 	{
+		href: 'https://x.com/beabzk',
+		label: 'X',
+		icon: 'simple-icons:x',
+	},
+	{
+		href: 'https://t.me/beabzk',
+		label: 'Telegram',
+		icon: 'simple-icons:telegram',
+	},
+	{
 		href: 'mailto:beabzk@proton.me',
 		label: 'Email',
 		icon: 'mdi:email',
