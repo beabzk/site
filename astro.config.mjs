@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://beabzk.dev',
+	site: 'https://beabzk.et',
 	vite: { plugins: [tailwindcss()] },
 	markdown: { shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' } } },
 	server: {
@@ -26,15 +26,15 @@ export default defineConfig({
 			options: {
 				variants: [
 					{
-							src: ['./src/assets/fonts/JetBrainsMono-VariableFont_wght.ttf'],
-							weight: '100 800',
-							style: 'normal',
+						src: ['./src/assets/fonts/JetBrainsMono-VariableFont_wght.ttf'],
+						weight: '100 800',
+						style: 'normal',
 					},
-						{
-							src: ['./src/assets/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf'],
-							weight: '100 800',
-							style: 'italic',
-						},
+					{
+						src: ['./src/assets/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf'],
+						weight: '100 800',
+						style: 'italic',
+					},
 				],
 			},
 		},
@@ -44,8 +44,8 @@ export default defineConfig({
 		sitemap(),
 		icon({
 			include: {
-				   mdi: ['linkedin', 'email', 'account', 'calendar', 'weather-sunny', 'weather-night', 'arrow-left', 'star-outline', 'open-in-new', 'briefcase-outline', 'map-marker-outline', 'lightning-bolt-outline'],
-				   'simple-icons': ['github'],
+				mdi: ['linkedin', 'email', 'account', 'calendar', 'weather-sunny', 'weather-night', 'arrow-left', 'star-outline', 'open-in-new', 'briefcase-outline', 'map-marker-outline', 'lightning-bolt-outline'],
+				'simple-icons': ['github'],
 			},
 		}),
 	],

@@ -31,6 +31,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={new URL(image.src, Astro.site)} />
+<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-6SNB5Q0YC3"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6SNB5Q0YC3');
+</script>
 <script is:inline>
   (() => {
     let stored;
