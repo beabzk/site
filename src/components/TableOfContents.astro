@@ -1,0 +1,10 @@
+---
+import type { MarkdownHeading } from 'astro';
+interface Props { headings: MarkdownHeading[]; }
+const headings = Astro.props.headings.filter((heading) => heading.depth >= 2 && heading.depth <= 4);
+---
+{headings.length > 0 && <aside class="article-sidebar">
+  <nav class="table-of-contents" aria-label="On this page">
+    <h2>On this page</h2><ol>{headings.map((heading) => <li style={`--depth: ${heading.depth - 2}`}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol>
+  </nav>
+</aside>}

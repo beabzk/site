@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import FormattedDate from './FormattedDate.astro';
+import TagList from './TagList.astro';
+interface Props { posts: CollectionEntry<'blog'>[]; searchable?: boolean; }
+const { posts, searchable = false } = Astro.props;
+---
+<div class="archive-list" data-archive-list>
+  {posts.map((post) => <article class="archive-item" data-archive-item data-search={searchable ? [post.data.title, post.data.description, ...post.data.tags, post.body ?? ''].join(' ').toLowerCase() : undefined}>
+    {post.data.heroImage && <a href={`/blog/${post.id}/`} tabindex="-1" aria-hidden="true"><Image class="archive-image" src={post.data.heroImage} alt={post.data.heroImageAlt || ''} width={768} loading="lazy" /></a>}
+    <div class="entry-heading">
+      <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+      <div class="entry-date"><FormattedDate date={post.data.pubDate} />{post.data.draft && <span class="draft-label">Draft</span>}</div>
+    </div>
+    <p>{post.data.description}</p>
+    <TagList tags={post.data.tags} />
+  </article>)}
+</div>

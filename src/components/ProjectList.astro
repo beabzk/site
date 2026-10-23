@@ -1,0 +1,15 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectTagList from './ProjectTagList.astro';
+import FormattedDate from './FormattedDate.astro';
+interface Props { projects: CollectionEntry<'projects'>[]; }
+const { projects } = Astro.props;
+---
+<div class="archive-list project-list">
+  {projects.map((project) => <article class="archive-item">
+    <div class="entry-heading"><h3><a href={`/projects/${project.id}/`}>{project.data.title}</a></h3><div class="entry-date"><FormattedDate date={project.data.date} /></div></div>
+    <div class="entry-meta"><span class:list={['project-status', { active: project.data.status === 'Active' }]}>{project.data.status}</span>{project.data.category && <span>{project.data.category}</span>}{project.data.featured && <span>Featured</span>}{project.data.draft && <span class="draft-label">Draft</span>}</div>
+    <p>{project.data.description}</p>
+    <ProjectTagList tags={project.data.tags} />
+  </article>)}
+</div>

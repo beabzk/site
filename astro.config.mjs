@@ -4,37 +4,37 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 import icon from 'astro-icon';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://beabzk.dev',
+	vite: { plugins: [tailwindcss()] },
+	markdown: { shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' } } },
 	server: {
 		port: 4444,
 	},
 	image: {
-    responsiveStyles: true,
-    layout: 'constrained',
-  	},
+		responsiveStyles: true,
+		layout: 'constrained',
+	},
 	fonts: [
 		{
-			provider: fontProviders.google(),
-			name: 'IBM Plex Serif',
-			cssVariable: '--font-atkinson',
-			weights: [400, 500, 600, 700],
-			styles: ['normal', 'italic'],
-			subsets: ['latin'],
-		},
-		{
 			provider: fontProviders.local(),
-			name: 'Atkinson Hyperlegible Mono',
-			cssVariable: '--font-atkinson-mono',
+			name: 'JetBrains Mono',
+			cssVariable: '--font-site-mono',
 			options: {
 				variants: [
 					{
-						src: ['./src/assets/fonts/AtkinsonHyperlegibleMono-VariableFont_wght.ttf'],
-						weight: '100 900',
-						style: 'normal',
+							src: ['./src/assets/fonts/JetBrainsMono-VariableFont_wght.ttf'],
+							weight: '100 800',
+							style: 'normal',
 					},
+						{
+							src: ['./src/assets/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf'],
+							weight: '100 800',
+							style: 'italic',
+						},
 				],
 			},
 		},

@@ -16,9 +16,11 @@
     "@astrojs/sitemap": "^3.7.1",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/simple-icons": "^1.2.52",
+    "@tailwindcss/vite": "^4.3.3",
     "astro": "^6.0.4",
     "astro-icon": "^1.1.5",
-    "sharp": "^0.34.3"
+    "sharp": "^0.34.3",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",

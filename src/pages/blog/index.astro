@@ -1,210 +1,51 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
+import Base from '../../layouts/Base.astro';
+import BlogList from '../../components/BlogList.astro';
 import TagList from '../../components/TagList.astro';
-import { Icon } from 'astro-icon/components';
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_AUTHOR } from '../../consts';
-
-const posts = (await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft)).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+import { SITE_TITLE } from '../../consts';
+const posts = (await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 ---
-
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title=`Blog - ${SITE_TITLE}` description={SITE_DESCRIPTION} />
-		<style>
-			.blog-header {
-				text-align: center;
-				margin-bottom: 3rem;
-			}
-			.blog-header h1 {
-				margin-bottom: 0.5rem;
-				font-size: 3rem;
-			}
-			.blog-header .subtitle {
-				color: var(--footer-text);
-				font-size: 1.2rem;
-				margin: 0;
-			}
-			ul {
-				display: flex;
-				flex-direction: column;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: 100%;
-				background: var(--header-bg);
-				border-radius: 16px;
-				overflow: hidden;
-				border: 1px solid var(--surface-border);
-				transition: border-color 0.3s ease;
-			}
-			ul li:hover {
-				border-color: var(--accent);
-			}
-			ul li img {
-				margin-bottom: 0;
-				border-radius: 0;
-				width: 100%;
-				height: auto;
-				display: block;
-			}
-			.post-link {
-				color: inherit;
-				text-decoration: none;
-			}
-			.post-content {
-				padding: 2rem;
-			}
-			.post-meta {
-				display: flex;
-				align-items: center;
-				gap: 1.5rem;
-				margin-bottom: 1rem;
-				font-size: 1rem;
-				color: var(--footer-text);
-				font-weight: 500;
-			}
-			.meta-item {
-				display: flex;
-				align-items: center;
-				gap: 0.5rem;
-			}
-			.meta-item svg {
-				color: var(--accent);
-				flex-shrink: 0;
-			}
-			.title {
-				margin: 0;
-				color: var(--heading-color);
-				line-height: 1.3;
-				font-size: 1.875rem;
-				font-weight: 700;
-				margin-bottom: 1rem;
-			}
-			.description {
-				margin: 0;
-				color: var(--text-color);
-				line-height: 1.6;
-				font-size: 1.125rem;
-				opacity: 0.9;
-			}
-			.post-link:hover .title {
-				color: var(--accent);
-			}
-			.post-link:hover .description {
-				opacity: 1;
-			}
-			.post-link:hover img {
-				box-shadow: none;
-			}
-			@media (max-width: 720px) {
-				.blog-header h1 {
-					font-size: 2rem;
-				}
-				.blog-header .subtitle {
-					font-size: 1rem;
-				}
-				ul {
-					gap: 1.5rem;
-				}
-				.post-content {
-					padding: 1.5rem;
-				}
-				.title {
-					font-size: 1.5rem;
-					margin-bottom: 0.75rem;
-				}
-				.description {
-					font-size: 1rem;
-				}
-				.post-meta {
-					font-size: 0.9rem;
-					margin-bottom: 0.75rem;
-					gap: 1rem;
-				}
-				.meta-item {
-					gap: 0.375rem;
-				}
-				
-				/* Custom styling for tags in blog index */
-				.post-content :global(.tag-list) {
-					justify-content: flex-start;
-					margin: 0 !important;
-				}
-				
-				.post-content :global(.tag-link) {
-					padding: 0.125rem 0.5rem !important;
-				}
-				
-				.post-content :global(.tag-more) {
-					padding: 0.125rem 0.5rem !important;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main id="main">
-			<section>
-				<div class="blog-header">
-					<h1>Blog</h1>
-					<p class="subtitle">Notes on software, systems, and building useful things.</p>
-					<a href="/tags" style="color: var(--accent); text-decoration: none; font-weight: 500;">Browse all tags →</a>
-				</div>
-				<ul>
-					{
-						   posts.map((post, idx) => (
-								<li>
-								   <article>
-									   <a class="post-link" href={`/blog/${post.id}/`} aria-label={post.data.title}>
-									   {post.data.heroImage && (
-										   <Image 
-											   width={720} 
-											   height={360} 
-											   src={post.data.heroImage} 
-											   alt={post.data.heroImageAlt || ''} 
-											   loading={idx < 2 ? 'eager' : 'lazy'}
-										   />
-									   )}
-									   <div class="post-content">
-										<div class="post-meta">
-											<div class="meta-item">
-												<Icon name="mdi:calendar" width={16} height={16} aria-hidden="true" />
-												<FormattedDate date={post.data.pubDate} />
-											</div>
-											<div class="meta-item">
-												<Icon name="mdi:account" width={16} height={16} aria-hidden="true" />
-												<span class="author">{SITE_AUTHOR}</span>
-											</div>
-										</div>
-									<hr aria-hidden="true" />
-									<h2 class="title">{post.data.title}</h2>
-										{post.data.description && (
-											<p class="description">{post.data.description}</p>
-										)}
-									</div>
-								</a>
-								<div class="post-content" style="padding-top: 0;">
-									<hr aria-hidden="true" />
-									<TagList tags={post.data.tags} limit={5} />
-								</div>
-							</article>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base title={`Blog - ${SITE_TITLE}`} description="Notes on software, systems, and building useful things.">
+  <header class="page-heading"><h1>Blog</h1><p>Notes on software, systems, and building useful things.</p></header>
+  <section data-search-archive>
+    <div class="archive-tools">
+      <label class="sr-only" for="article-search">Search articles</label>
+      <input class="archive-search" id="article-search" type="search" placeholder="Search articles..." autocomplete="off" />
+      <TagList tags={tags} />
+      <a class="text-link" href="/tags">Browse all tags →</a>
+    </div>
+    <BlogList posts={posts} searchable />
+    <p class="search-empty" role="status" hidden>No matching articles found.</p>
+  </section>
+</Base>
+<script>
+  const archive = document.querySelector<HTMLElement>('[data-search-archive]');
+  const input = archive?.querySelector<HTMLInputElement>('input[type="search"]');
+  if (archive && input) {
+    const items = [...archive.querySelectorAll<HTMLElement>('[data-archive-item]')];
+    const empty = archive.querySelector<HTMLElement>('.search-empty');
+    const filter = (writeUrl: boolean) => {
+      const query = input.value.trim().toLowerCase();
+      const tokens = query.split(/\s+/).filter(Boolean);
+      let count = 0;
+      for (const item of items) {
+        item.hidden = !tokens.every((token) => (item.dataset.search ?? '').includes(token));
+        if (!item.hidden) count++;
+      }
+      if (empty) empty.hidden = count > 0;
+      if (writeUrl) {
+        const url = new URL(window.location.href);
+        if (query) url.searchParams.set('q', input.value.trim());
+        else url.searchParams.delete('q');
+        history.replaceState(history.state, '', url);
+      }
+    };
+    const restore = () => { input.value = new URLSearchParams(location.search).get('q') ?? ''; filter(false); };
+    input.addEventListener('input', () => filter(true));
+    window.addEventListener('popstate', restore);
+    restore();
+  }
+</script>

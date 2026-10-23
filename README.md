@@ -1,43 +1,27 @@
 # beabzk
 
-Personal site rebuilt on Astro using the Ataraxia theme as the base.
+Personal site built with Astro, using the design of [imwqqz/wqqz.dev](https://github.com/imwqqz/wqqz.dev).
 
-## Stack
+## Content and routes
 
-- Astro 6
-- MDX content collections
-- `pnpm`
-- RSS and sitemap generation
+- Blog posts: `src/content/blog`, at `/blog/[slug]`.
+- Projects: `src/content/projects`, at `/projects/[slug]`.
+- Main pages: `/`, `/about`, `/blog`, `/projects`, `/tags`.
+- Blog topics: `/tags/[tag]`.
+- Feeds: `/rss.xml`, `/sitemap-index.xml`.
 
-## Routes
+Blog entries use `pubDate`; projects use `date`, `status`, and optional `github`, `demo`, `docs`, and `npm` links. Entries marked `draft: true` are visible during development and excluded from production pages and RSS.
 
-- `/`
-- `/about`
-- `/blog`
-- `/blog/[slug]`
-- `/projects`
-- `/projects/[slug]`
-- `/tags`
+## Development
 
-## Content
-
-- Blog posts live in `src/content/blog`
-- Projects live in `src/content/projects`
-
-Blog entries use `pubDate`. Project entries use `date`, `status`, and optional outbound links such as `github`, `demo`, `docs`, and `npm`.
-
-## Commands
-
-```bash
+```sh
 pnpm install
 pnpm dev
-pnpm astro check
+pnpm check
 pnpm build
 pnpm preview
 ```
 
-## Notes
+The development server uses port 4444. Site metadata and social links are in `src/consts.ts`, and the production URL is set in `astro.config.mjs`.
 
-- Site metadata and social links are configured in `src/consts.ts`.
-- The production URL is set in `astro.config.mjs`.
-- The design is based on `inakicalvo/astro-ataraxia-theme`, adapted for blog + projects instead of the stock demo content.
+The shared page layout is `src/layouts/Base.astro`. Theme colors and layout styles are in `src/styles/global.css`; article typography is in `src/styles/archives.css`. JetBrains Mono is served locally from `src/assets/fonts`, with its OFL license alongside the font files. The upstream MIT notice is in `licenses/wqqz.dev-MIT.txt`.
